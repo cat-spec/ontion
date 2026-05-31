@@ -1,0 +1,246 @@
+{
+  "main": {
+    "id": "b7ea7555541e5302",
+    "type": "split",
+    "children": [
+      {
+        "id": "ac171098f9a4a846",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ad6e56f9a279ff36",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "front_study/技术学习/git协同工作.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "git协同工作"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "ca4dbb7e93bea30d",
+    "type": "split",
+    "children": [
+      {
+        "id": "35b02c5466da4a97",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5d5178632b64c77b",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "541877043b5bd78e",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "439b78e4acbdbd7d",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          },
+          {
+            "id": "9aab00f8c1c3b642",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "00cdc3c06245923b",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 211.5
+  },
+  "right": {
+    "id": "f067514dc1521a97",
+    "type": "split",
+    "children": [
+      {
+        "id": "ed5b170115f77e31",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c6439384f6884318",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Calendar/2026-04-16.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "2026-04-16 的大纲"
+            }
+          },
+          {
+            "id": "1b2b5d992a902981",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
+          },
+          {
+            "id": "cfb66db27abeaf44",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Calendar/2026-03-31.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "2026-03-31 的反向链接列表"
+            }
+          },
+          {
+            "id": "9feeb4aa7aeee573",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Calendar/2026-03-31.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "2026-03-31 的出链列表"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 223.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "ad6e56f9a279ff36",
+  "lastOpenFiles": [
+    "front_study/起步总结.md",
+    "front_study/常见需求.md",
+    "个人图书馆.base",
+    "backend_study/技术学习/node-express.md",
+    "learn-scss-plan.md",
+    "backend_study/技术学习/Mysql学习.md",
+    "ai-agant/AI Agent 新手学习文档.md",
+    "产品实习/产品实习指南.md",
+    "_Templates/project.md",
+    "_Templates/project manger.md",
+    "产品实习",
+    "ai-agant/ai-agant使用经历.md",
+    "front_study/项目完成/类ds聊天工具/需求分析.md",
+    "ai-agant",
+    "front_study/Bug一览.md",
+    "front_study/项目完成/类ds聊天工具",
+    "front_study/mermaid图表语法.md",
+    "books/简单的逻辑学：清晰思考的起点.md",
+    "front_study/技术学习/前端复习指南书.md",
+    "front_study/技术学习/前端基础.md",
+    "front_study/技术学习/三大框架.md",
+    "front_study/技术学习/预编译学习.md",
+    "front_study/技术学习/nginx学习.md",
+    "front_study/技术学习/Tailwind学习.md",
+    "front_study/技术学习/TypeScript与JavaScript学习.md",
+    "front_study/技术学习/uni-app.md",
+    "front_study/技术学习/vite.md",
+    "front_study/技术学习/AXIOS.md",
+    "front_study/axios学习.md",
+    "front_study/技术学习/git协同工作.md",
+    "front_study/项目完成/个人技术仪表盘/生成菠萝主题图标 (5).png",
+    "front_study/项目完成/uni智慧学堂",
+    "front_study/项目完成/小程序问答",
+    "years/photo/5b88cea856669f9a1c490ec878e8bcfe.jpg",
+    "years/photo",
+    "years/photo/ff98dc8602b5d669f9673986912ffb1f.jpg",
+    "years/photo/b3e289da69c0f3c238cb776a2eccc759.jpg",
+    "years",
+    "Pasted image 20260407151123.png",
+    "Pasted image 20260407151639.png",
+    "Pasted image 20260407160715.png",
+    "Pasted image 20260407151239.png",
+    "Pasted image 20260407151107.png",
+    "backend_study/技术学习",
+    "未命名.canvas",
+    "logo.png",
+    "front_study/技术学习/img"
+  ]
+}
