@@ -1,0 +1,11 @@
+Option Explicit
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    Dim hitCell As Range
+
+    If Target.CountLarge > 1 Then Exit Sub
+    Set hitCell = Intersect(Target, Me.Range("B6:Q22"))
+    If hitCell Is Nothing Then Exit Sub
+
+    JudgeShot hitCell.Cells(1, 1)
+End Sub

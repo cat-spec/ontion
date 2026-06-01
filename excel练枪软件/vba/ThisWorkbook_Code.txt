@@ -1,0 +1,10 @@
+Option Explicit
+
+Private Sub Workbook_Open()
+    InitializeWorkbook
+    MsgBox "请启用宏后使用。" & vbCrLf & "开始页双击按钮区域即可开始游戏。", vbInformation, "Excel练枪软件"
+End Sub
+
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+    CancelTick
+End Sub

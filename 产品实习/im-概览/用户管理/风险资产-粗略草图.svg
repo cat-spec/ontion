@@ -1,0 +1,265 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1480" viewBox="0 0 2200 1480">
+  <defs>
+    <style>
+      .title{font:700 38px "PingFang SC","Microsoft YaHei",sans-serif;fill:#182535}
+      .h1{font:700 30px "PingFang SC","Microsoft YaHei",sans-serif;fill:#223248}
+      .h2{font:700 22px "PingFang SC","Microsoft YaHei",sans-serif;fill:#314256}
+      .b{font:600 18px "PingFang SC","Microsoft YaHei",sans-serif;fill:#314256}
+      .s{font:400 15px "PingFang SC","Microsoft YaHei",sans-serif;fill:#6b7a90}
+      .xs{font:400 13px "PingFang SC","Microsoft YaHei",sans-serif;fill:#8290a3}
+      .n{font:700 34px "PingFang SC","Microsoft YaHei",sans-serif;fill:#1f2f41}
+      .side{fill:#0f1d30}
+      .bg{fill:#f2f7fb}
+      .shell{fill:#ffffff;stroke:#d9e4ee;stroke-width:2}
+      .panel{fill:#ffffff;stroke:#dde6ef;stroke-width:2}
+      .soft{fill:#f7fbfd;stroke:#dde6ef;stroke-width:2}
+      .header{fill:#e8f8fa;stroke:#d8edf0;stroke-width:1}
+      .line{stroke:#e7edf4;stroke-width:1}
+      .accent{fill:#18c2c8}
+      .accent-stroke{stroke:#18c2c8;stroke-width:2}
+      .muted-fill{fill:#eef4f8}
+      .cyan-soft{fill:#eaf9fb}
+      .blue-soft{fill:#edf3ff}
+      .orange-soft{fill:#fff4e8}
+      .red-soft{fill:#fff0f0}
+      .chip-text{font:600 13px "PingFang SC","Microsoft YaHei",sans-serif}
+      .white{fill:#ffffff}
+      .dark{fill:#26384a}
+      .danger{fill:#f56c6c}
+      .success{fill:#47b36b}
+      .warn{fill:#f2a64a}
+      .link{fill:#18c2c8;font:600 15px "PingFang SC","Microsoft YaHei",sans-serif}
+    </style>
+  </defs>
+
+  <rect width="2200" height="1480" class="bg"/>
+
+  <rect x="0" y="0" width="294" height="1480" class="side"/>
+  <text x="42" y="74" class="title white" style="font-size:28px;">风险资产模块</text>
+  <rect x="0" y="156" width="294" height="88" fill="#13243a"/>
+  <text x="44" y="212" class="b white">用户管理</text>
+  <rect x="0" y="262" width="294" height="94" fill="#1abfc7"/>
+  <text x="44" y="320" class="b white">风险资产</text>
+  <text x="44" y="418" class="b" fill="#92a4bb">操作与命中日志</text>
+  <text x="44" y="500" class="b" fill="#92a4bb">风控规则</text>
+  <text x="44" y="582" class="b" fill="#92a4bb">白名单 / 豁免</text>
+
+  <rect x="328" y="42" width="1832" height="1396" rx="28" class="shell"/>
+
+  <text x="382" y="108" class="h1">风险资产</text>
+  <text x="382" y="144" class="s">统一管理风险 IP、黑名单 IP 和禁用设备，服务风控 / 运营日常观察、升级处置和误封恢复。</text>
+  <rect x="1810" y="72" width="132" height="42" rx="12" class="panel"/>
+  <text x="1852" y="99" class="b" style="font-size:15px;">导出</text>
+  <rect x="1958" y="72" width="148" height="42" rx="12" class="accent"/>
+  <text x="2006" y="99" class="b white" style="font-size:15px;">新增对象</text>
+
+  <!-- summary cards -->
+  <g transform="translate(382 184)">
+    <rect width="398" height="148" rx="22" class="soft"/>
+    <text x="22" y="36" class="s">风险IP总数</text>
+    <text x="22" y="92" class="n">37,103</text>
+    <rect x="22" y="108" width="96" height="24" rx="12" class="cyan-soft"/>
+    <text x="38" y="125" class="chip-text" fill="#0f8f95">观察库对象</text>
+    <rect x="292" y="24" width="82" height="82" rx="18" class="blue-soft"/>
+    <text x="317" y="72" class="b" fill="#3564cc">IP</text>
+  </g>
+
+  <g transform="translate(798 184)">
+    <rect width="398" height="148" rx="22" class="soft"/>
+    <text x="22" y="36" class="s">黑名单IP总数</text>
+    <text x="22" y="92" class="n">1,284</text>
+    <rect x="22" y="108" width="96" height="24" rx="12" class="orange-soft"/>
+    <text x="38" y="125" class="chip-text" fill="#b97715">阻断中</text>
+    <rect x="292" y="24" width="82" height="82" rx="18" class="orange-soft"/>
+    <text x="310" y="72" class="b" fill="#b97715">BAN</text>
+  </g>
+
+  <g transform="translate(1214 184)">
+    <rect width="398" height="148" rx="22" class="soft"/>
+    <text x="22" y="36" class="s">禁用设备总数</text>
+    <text x="22" y="92" class="n">268</text>
+    <rect x="22" y="108" width="96" height="24" rx="12" class="red-soft"/>
+    <text x="38" y="125" class="chip-text" fill="#d34f4f">设备处置</text>
+    <rect x="292" y="24" width="82" height="82" rx="18" class="cyan-soft"/>
+    <text x="311" y="72" class="b" fill="#0f8f95">DEV</text>
+  </g>
+
+  <g transform="translate(1630 184)">
+    <rect width="398" height="148" rx="22" class="soft"/>
+    <text x="22" y="36" class="s">今日命中次数</text>
+    <text x="22" y="92" class="n">5,421</text>
+    <rect x="22" y="108" width="118" height="24" rx="12" class="cyan-soft"/>
+    <text x="38" y="125" class="chip-text" fill="#0f8f95">较昨日 +12%</text>
+    <rect x="278" y="98" width="92" height="14" rx="7" fill="#e7f8f8"/>
+    <polyline points="282,108 300,104 318,106 336,96 354,102 372,90" fill="none" stroke="#18c2c8" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- tabs -->
+  <g transform="translate(382 362)">
+    <rect width="1726" height="62" rx="18" class="panel"/>
+    <rect x="16" y="10" width="182" height="42" rx="14" class="accent"/>
+    <text x="58" y="37" class="b white" style="font-size:16px;">IP风险库</text>
+    <rect x="149" y="17" width="34" height="26" rx="13" fill="#ffffff" opacity="0.18"/>
+    <text x="158" y="35" class="xs white">37103</text>
+
+    <rect x="212" y="10" width="182" height="42" rx="14" class="muted-fill"/>
+    <text x="252" y="37" class="b dark" style="font-size:16px;">IP黑名单</text>
+    <rect x="344" y="17" width="34" height="26" rx="13" fill="#ffffff"/>
+    <text x="354" y="35" class="xs dark">1284</text>
+
+    <rect x="408" y="10" width="182" height="42" rx="14" class="muted-fill"/>
+    <text x="448" y="37" class="b dark" style="font-size:16px;">设备禁用</text>
+    <rect x="540" y="17" width="34" height="26" rx="13" fill="#ffffff"/>
+    <text x="552" y="35" class="xs dark">268</text>
+
+    <text x="1368" y="37" class="xs">当前工作流：风险库 -> 升级黑名单 -> 查看命中 / 关联用户</text>
+  </g>
+
+  <!-- filters -->
+  <g transform="translate(382 446)">
+    <rect width="1726" height="146" rx="22" class="panel"/>
+
+    <text x="24" y="42" class="s">对象值</text>
+    <rect x="24" y="56" width="420" height="46" rx="14" class="soft"/>
+    <text x="42" y="85" class="s">输入 IP / CIDR / IPv6 进行搜索</text>
+
+    <text x="468" y="42" class="s">创建时间</text>
+    <rect x="468" y="56" width="316" height="46" rx="14" class="soft"/>
+    <text x="486" y="85" class="s">开始日期  -  结束日期</text>
+
+    <text x="808" y="42" class="s">创建人</text>
+    <rect x="808" y="56" width="204" height="46" rx="14" class="soft"/>
+    <text x="826" y="85" class="s">全部</text>
+
+    <text x="1036" y="42" class="s">状态</text>
+    <rect x="1036" y="56" width="204" height="46" rx="14" class="soft"/>
+    <text x="1054" y="85" class="s">观察中</text>
+
+    <text x="1264" y="42" class="s">风险等级</text>
+    <rect x="1264" y="56" width="204" height="46" rx="14" class="soft"/>
+    <text x="1282" y="85" class="s">高 / 严重</text>
+
+    <rect x="1510" y="56" width="96" height="46" rx="14" class="accent"/>
+    <text x="1542" y="85" class="b white" style="font-size:16px;">查询</text>
+    <rect x="1622" y="56" width="96" height="46" rx="14" class="panel"/>
+    <text x="1654" y="85" class="b" style="font-size:16px;">重置</text>
+
+    <rect x="24" y="114" width="174" height="22" rx="11" class="cyan-soft"/>
+    <text x="40" y="129" class="xs" fill="#0f8f95">统一主筛选 + tab 附加筛选</text>
+  </g>
+
+  <!-- content layout -->
+  <g transform="translate(382 618)">
+    <rect width="1196" height="770" rx="24" class="panel"/>
+    <rect x="1220" y="0" width="488" height="770" rx="24" class="panel"/>
+
+    <text x="26" y="42" class="h2">IP风险库列表</text>
+    <text x="1248" y="42" class="h2">详情抽屉</text>
+
+    <!-- toolbar -->
+    <rect x="26" y="60" width="122" height="42" rx="14" class="accent"/>
+    <text x="58" y="87" class="b white" style="font-size:15px;">导入IP</text>
+    <rect x="162" y="60" width="112" height="42" rx="14" class="panel"/>
+    <text x="194" y="87" class="b" style="font-size:15px;">批量操作</text>
+    <rect x="288" y="60" width="100" height="42" rx="14" class="panel"/>
+    <text x="320" y="87" class="b" style="font-size:15px;">导出</text>
+    <rect x="402" y="60" width="126" height="42" rx="14" class="panel"/>
+    <text x="430" y="87" class="b" style="font-size:15px;">白名单 / 豁免</text>
+    <text x="912" y="86" class="xs">危险动作统一放到“更多”或详情抽屉中处理</text>
+
+    <!-- table header -->
+    <g transform="translate(26 126)">
+      <rect x="0" y="0" width="1144" height="54" rx="14" class="header"/>
+      <text x="26" y="34" class="b">IP地址</text>
+      <text x="206" y="34" class="b">风险等级</text>
+      <text x="366" y="34" class="b">来源类型</text>
+      <text x="534" y="34" class="b">关联用户数</text>
+      <text x="684" y="34" class="b">命中次数</text>
+      <text x="826" y="34" class="b">最近命中时间</text>
+      <text x="1016" y="34" class="b">操作</text>
+
+      <g transform="translate(0 68)">
+        <rect x="0" y="0" width="1144" height="78" rx="14" class="soft"/>
+        <text x="26" y="46" class="b" style="font-size:17px;">192.168.1.2</text>
+        <rect x="190" y="25" width="72" height="28" rx="14" class="red-soft"/>
+        <text x="214" y="44" class="chip-text" fill="#d34f4f">严重</text>
+        <rect x="334" y="25" width="96" height="28" rx="14" class="blue-soft"/>
+        <text x="350" y="44" class="chip-text" fill="#3564cc">规则命中</text>
+        <text x="572" y="46" class="b" style="font-size:17px;">18</text>
+        <text x="716" y="46" class="b" style="font-size:17px;">245</text>
+        <text x="826" y="46" class="s">2026-05-21 10:24</text>
+        <text x="1016" y="46" class="link">查看详情</text>
+        <text x="1096" y="46" class="link">更多</text>
+      </g>
+
+      <g transform="translate(0 158)">
+        <rect x="0" y="0" width="1144" height="78" rx="14" class="soft"/>
+        <text x="26" y="46" class="b" style="font-size:17px;">192.168.5.123</text>
+        <rect x="190" y="25" width="72" height="28" rx="14" class="orange-soft"/>
+        <text x="214" y="44" class="chip-text" fill="#b97715">高</text>
+        <rect x="334" y="25" width="96" height="28" rx="14" class="cyan-soft"/>
+        <text x="350" y="44" class="chip-text" fill="#0f8f95">人工导入</text>
+        <text x="572" y="46" class="b" style="font-size:17px;">6</text>
+        <text x="716" y="46" class="b" style="font-size:17px;">61</text>
+        <text x="826" y="46" class="s">2026-05-21 09:17</text>
+        <text x="1016" y="46" class="link">查看详情</text>
+        <text x="1096" y="46" class="link">更多</text>
+      </g>
+
+      <g transform="translate(0 248)">
+        <rect x="0" y="0" width="1144" height="78" rx="14" class="soft"/>
+        <text x="26" y="46" class="b" style="font-size:17px;">10.24.8.0/24</text>
+        <rect x="190" y="25" width="72" height="28" rx="14" class="blue-soft"/>
+        <text x="214" y="44" class="chip-text" fill="#3564cc">中</text>
+        <rect x="334" y="25" width="96" height="28" rx="14" class="muted-fill"/>
+        <text x="350" y="44" class="chip-text" fill="#607287">第三方情报</text>
+        <text x="572" y="46" class="b" style="font-size:17px;">2</text>
+        <text x="716" y="46" class="b" style="font-size:17px;">19</text>
+        <text x="826" y="46" class="s">2026-05-20 21:42</text>
+        <text x="1016" y="46" class="link">查看详情</text>
+        <text x="1096" y="46" class="link">更多</text>
+      </g>
+
+      <line x1="0" y1="358" x2="1144" y2="358" class="line"/>
+      <text x="780" y="392" class="xs">默认排序：最近命中时间倒序，其次风险等级倒序</text>
+      <text x="1002" y="392" class="xs">共 37103 条</text>
+    </g>
+
+    <!-- drawer -->
+    <g transform="translate(1248 60)">
+      <rect x="0" y="0" width="432" height="56" rx="16" class="soft"/>
+      <text x="22" y="35" class="b">192.168.1.2</text>
+      <rect x="274" y="14" width="58" height="28" rx="14" class="red-soft"/>
+      <text x="293" y="33" class="chip-text" fill="#d34f4f">严重</text>
+      <text x="350" y="35" class="link">升级黑名单</text>
+
+      <text x="0" y="150" class="b">基础信息</text>
+      <rect x="0" y="166" width="432" height="128" rx="18" class="soft"/>
+      <text x="20" y="198" class="s">对象类型：IP风险对象</text>
+      <text x="20" y="226" class="s">来源：规则命中 / 异常登录模型</text>
+      <text x="20" y="254" class="s">创建人：rabbit001</text>
+      <text x="20" y="282" class="s">创建时间：2026-05-15 14:23:13</text>
+
+      <text x="0" y="334" class="b">状态与命中</text>
+      <rect x="0" y="350" width="432" height="150" rx="18" class="soft"/>
+      <text x="20" y="382" class="s">状态：观察中</text>
+      <text x="20" y="410" class="s">命中次数：245</text>
+      <text x="20" y="438" class="s">最近命中：2026-05-21 10:24</text>
+      <text x="20" y="466" class="s">关联用户：18</text>
+      <text x="20" y="494" class="s">处置建议：升级黑名单 / 登录二次验证</text>
+
+      <text x="0" y="540" class="b">关联对象</text>
+      <rect x="0" y="556" width="432" height="94" rx="18" class="soft"/>
+      <text x="20" y="588" class="s">关联设备：3 台</text>
+      <text x="20" y="616" class="s">关联用户：pt_1_4、pt_1_6、pt_1_8...</text>
+
+      <text x="0" y="690" class="b">操作历史</text>
+      <rect x="0" y="706" width="432" height="132" rx="18" class="soft"/>
+      <text x="20" y="738" class="s">2026-05-21 10:30  rabbit001  调整风险等级：高 -> 严重</text>
+      <text x="20" y="766" class="s">2026-05-21 09:58  system     规则命中，自动加入风险库</text>
+      <text x="20" y="794" class="s">高危操作要求：二次确认 + 填写原因 + 写日志</text>
+    </g>
+  </g>
+
+  <text x="382" y="1422" class="xs">粗略图说明：统一入口“风险资产”，上方概览卡 + 中部 tab + 统一筛选 + 左侧列表 + 右侧详情抽屉；默认落地 IP风险库。</text>
+</svg>

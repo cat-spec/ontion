@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>所有用户 - 顶部可视化原型</title>
+  <style>
+    :root {
+      --bg: #eef4f8;
+      --panel: #ffffff;
+      --panel-soft: #f7fbfd;
+      --line: #dfe7ef;
+      --line-soft: #edf2f7;
+      --text: #27364a;
+      --muted: #7f8a9c;
+      --accent: #18c2c8;
+      --accent-deep: #0f8f95;
+      --accent-soft: rgba(24, 194, 200, 0.12);
+      --blue-soft: #eaf3ff;
+      --shadow: 0 18px 48px rgba(26, 54, 93, 0.08);
+      --danger: #f56c6c;
+      --success: #49b675;
+      --warning: #f1a54a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(24, 194, 200, 0.14), transparent 28%),
+        linear-gradient(180deg, #f7fbfd 0%, var(--bg) 100%);
+      color: var(--text);
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    }
+
+    .page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    .shell {
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 28px 28px 18px;
+      border-bottom: 1px solid rgba(223, 231, 239, 0.7);
+    }
+
+    .title {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 700;
+      color: #1f2d3d;
+      letter-spacing: 0.4px;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .header-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-deep);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      height: 40px;
+      padding: 0 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .btn.primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .section {
+      padding: 24px 28px 0;
+    }
+
+    .section:last-child {
+      padding-bottom: 28px;
+    }
+
+    .section-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: #223248;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .metric-card {
+      position: relative;
+      overflow: visible;
+      min-height: 206px;
+      padding: 18px 18px 16px;
+      border: 1px solid rgba(223, 231, 239, 0.95);
+      border-radius: 20px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(247, 251, 253, 0.98)),
+        var(--panel);
+      box-shadow: 0 12px 28px rgba(20, 38, 68, 0.06);
+    }
+
+    .metric-card::after {
+      content: "";
+      position: absolute;
+      inset: auto 18px 0 auto;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(24, 194, 200, 0.16), transparent 68%);
+      pointer-events: none;
+    }
+
+    .metric-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .metric-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #597086;
+      letter-spacing: 0.2px;
+    }
+
+    .metric-help-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .metric-help {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border: 1px solid #cdd9e5;
+      border-radius: 50%;
+      background: #fff;
+      color: #64748b;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: help;
+    }
+
+    .metric-help:hover,
+    .metric-help:focus-visible {
+      border-color: var(--accent);
+      color: var(--accent-deep);
+      outline: none;
+    }
+
+    .metric-tooltip {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      z-index: 5;
+      width: 248px;
+      padding: 12px 14px;
+      border: 1px solid rgba(24, 194, 200, 0.18);
+      border-radius: 14px;
+      background: rgba(34, 49, 69, 0.96);
+      color: #f3f8fc;
+      font-size: 12px;
+      line-height: 1.6;
+      box-shadow: 0 18px 30px rgba(12, 21, 33, 0.24);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    .metric-tooltip strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #ffffff;
+      font-size: 13px;
+    }
+
+    .metric-help-wrap:hover .metric-tooltip,
+    .metric-help-wrap:focus-within .metric-tooltip {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .metric-value-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .metric-value {
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 700;
+      color: #1f2f41;
+      letter-spacing: 0.4px;
+    }
+
+    .metric-unit {
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .metric-compare {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-deep);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .metric-chart {
+      margin-top: 18px;
+      padding: 10px 12px 8px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(234, 243, 255, 0.78), rgba(255, 255, 255, 0.92));
+      border: 1px solid rgba(224, 231, 239, 0.88);
+    }
+
+    .metric-chart svg {
+      display: block;
+      width: 100%;
+      height: 58px;
+    }
+
+    .metric-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .metric-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(223, 231, 239, 0.95);
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr auto;
+      gap: 14px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 251, 253, 0.96));
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #5b6c80;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      height: 46px;
+      padding: 0 14px;
+      border: 1px solid #d7e2ec;
+      border-radius: 14px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      font-size: 14px;
+    }
+
+    .filter-actions {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .actions-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 18px 0 16px;
+    }
+
+    .actions-left,
+    .actions-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--line);
+      color: #54657b;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .table-card {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .table-wrap {
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1160px;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      height: 60px;
+      padding: 0 18px;
+      background: linear-gradient(180deg, #ecfbfd, #e6f7fa);
+      color: #456076;
+      font-size: 15px;
+      font-weight: 700;
+      text-align: left;
+      border-bottom: 1px solid #d7edf0;
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 18px;
+      border-bottom: 1px solid var(--line-soft);
+      background: #fff;
+      color: #33465b;
+      font-size: 14px;
+      vertical-align: middle;
+    }
+
+    tbody tr:hover td {
+      background: #fbfeff;
+    }
+
+    .checkbox {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border: 1px solid #cad7e2;
+      border-radius: 8px;
+      color: #cad7e2;
+    }
+
+    .user-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .user-primary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #243449;
+    }
+
+    .gender-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent-deep);
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .user-sub {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 76px;
+      height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .pill.online {
+      background: rgba(73, 182, 117, 0.14);
+      color: var(--success);
+    }
+
+    .pill.offline {
+      background: rgba(147, 160, 178, 0.16);
+      color: #7c8a99;
+    }
+
+    .pill.internal {
+      background: rgba(24, 194, 200, 0.14);
+      color: var(--accent-deep);
+    }
+
+    .pill.external {
+      background: rgba(70, 132, 255, 0.12);
+      color: #3564cc;
+    }
+
+    .pill.enabled {
+      background: rgba(24, 194, 200, 0.14);
+      color: var(--accent-deep);
+    }
+
+    .pill.locked {
+      background: rgba(241, 165, 74, 0.14);
+      color: var(--warning);
+    }
+
+    .pill.normal {
+      background: rgba(101, 122, 145, 0.12);
+      color: #607287;
+    }
+
+    .table-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+    }
+
+    .text-btn {
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: var(--accent);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .text-btn.danger {
+      color: var(--danger);
+    }
+
+    .footer-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 20px 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pager {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .page-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: #617488;
+      font-weight: 700;
+    }
+
+    .page-chip.active {
+      border-color: var(--accent);
+      color: var(--accent-deep);
+      background: var(--accent-soft);
+    }
+
+    .analytics-note {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border: 1px dashed rgba(24, 194, 200, 0.35);
+      border-radius: 18px;
+      background: rgba(24, 194, 200, 0.05);
+      color: #4b6177;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .analytics-note code {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.8);
+      font-family: ui-monospace, "SFMono-Regular", "SF Mono", Consolas, monospace;
+      color: #33516f;
+    }
+
+    @media (max-width: 1180px) {
+      .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .filters {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 12px;
+      }
+
+      .header,
+      .section {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .header {
+        flex-direction: column;
+      }
+
+      .card-grid,
+      .filters {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .toolbar,
+      .actions-bar,
+      .actions-left,
+      .actions-right {
+        width: 100%;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="shell">
+      <header class="header">
+        <div>
+          <h1 class="title">所有用户</h1>
+          <div class="subtitle">顶部卡片用于快速理解平台规模、增长、活跃与会话在线状态；下方筛选仅作用于用户列表。</div>
+          <div class="header-note">全局统计不随筛选条件变化</div>
+        </div>
+        <div class="toolbar">
+          <button class="btn">导出</button>
+          <button class="btn primary">新增用户</button>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="section-top">
+          <div>
+            <h2 class="section-title">用户概览</h2>
+            <div class="section-subtitle" id="stat-time">统计时间：--</div>
+          </div>
+          <div class="section-subtitle">指标口径说明仅通过卡片右上角 tooltip 查看</div>
+        </div>
+        <div class="card-grid" id="metric-grid" aria-label="用户概览指标"></div>
+        <div class="analytics-note">
+          原型中已预留埋点事件：<code>user_list_page_view</code>、<code>user_list_dashboard_card_exposure</code>、<code>user_list_dashboard_tooltip_open</code>。
+          业务事件契约按方案保留：<code>user_register_success</code>、<code>user_login_success</code>、<code>user_logout</code>、<code>user_session_state_changed</code>。
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="filters" aria-label="用户筛选区域">
+          <div class="field">
+            <label for="keyword">关键词</label>
+            <input id="keyword" type="text" placeholder="输入昵称、手机号或用户ID搜索">
+          </div>
+          <div class="field">
+            <label for="online-status">在线状态</label>
+            <select id="online-status">
+              <option>全部</option>
+              <option>在线</option>
+              <option>离线</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="user-type">用户类型</label>
+            <select id="user-type">
+              <option>全部</option>
+              <option>内部用户</option>
+              <option>外部用户</option>
+            </select>
+          </div>
+          <div class="filter-actions">
+            <button class="btn primary">查询</button>
+            <button class="btn">重置</button>
+          </div>
+        </div>
+
+        <div class="actions-bar">
+          <div class="actions-left">
+            <button class="btn primary">+ 新增用户</button>
+            <button class="btn">导出</button>
+            <button class="btn">批量打标</button>
+            <span class="tag">快捷说明：顶部卡片不参与筛选</span>
+          </div>
+          <div class="actions-right">
+            <span class="tag">共 18508 条</span>
+            <span class="tag">仅授权角色可查看完整手机号</span>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-wrap">
+            <table aria-label="用户列表">
+              <thead>
+                <tr>
+                  <th style="width: 64px;">选择</th>
+                  <th style="width: 190px;">用户信息</th>
+                  <th style="width: 140px;">用户ID</th>
+                  <th style="width: 160px;">用户类型</th>
+                  <th style="width: 130px;">在线状态</th>
+                  <th style="width: 150px;">登录锁定状态</th>
+                  <th style="width: 130px;">是否启用</th>
+                  <th style="width: 170px;">登录IP</th>
+                  <th style="width: 180px;">注册时间</th>
+                  <th style="width: 220px;">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="checkbox">□</span></td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-primary">
+                        <span class="user-name">kak</span>
+                        <span class="gender-tag">♀</span>
+                      </div>
+                      <div class="user-sub">180****8888</div>
+                    </div>
+                  </td>
+                  <td>yY927093</td>
+                  <td><span class="pill internal">内部用户</span></td>
+                  <td><span class="pill offline">离线</span></td>
+                  <td><span class="pill normal">未锁定</span></td>
+                  <td><span class="pill enabled">启用</span></td>
+                  <td>192.168.1.23</td>
+                  <td>2026-05-15 11:14</td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="text-btn">编辑</button>
+                      <button class="text-btn">重置密码</button>
+                      <button class="text-btn danger">删除</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="checkbox">□</span></td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-primary">
+                        <span class="user-name">分钟</span>
+                        <span class="gender-tag">♂</span>
+                      </div>
+                      <div class="user-sub">131****2222</div>
+                    </div>
+                  </td>
+                  <td>mO047663</td>
+                  <td><span class="pill external">外部用户</span></td>
+                  <td><span class="pill online">在线</span></td>
+                  <td><span class="pill normal">未锁定</span></td>
+                  <td><span class="pill enabled">启用</span></td>
+                  <td>172.16.20.5</td>
+                  <td>2026-05-15 11:07</td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="text-btn">编辑</button>
+                      <button class="text-btn">重置密码</button>
+                      <button class="text-btn danger">删除</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="checkbox">□</span></td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-primary">
+                        <span class="user-name">酷炫兔子2865</span>
+                        <span class="gender-tag">♂</span>
+                      </div>
+                      <div class="user-sub">157****4049</div>
+                    </div>
+                  </td>
+                  <td>tX374160</td>
+                  <td><span class="pill external">外部用户</span></td>
+                  <td><span class="pill offline">离线</span></td>
+                  <td><span class="pill locked">已锁定</span></td>
+                  <td><span class="pill enabled">启用</span></td>
+                  <td>-</td>
+                  <td>2026-05-14 16:19</td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="text-btn">编辑</button>
+                      <button class="text-btn">重置密码</button>
+                      <button class="text-btn danger">删除</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="checkbox">□</span></td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-primary">
+                        <span class="user-name">法甲</span>
+                        <span class="gender-tag">♀</span>
+                      </div>
+                      <div class="user-sub">135****7676</div>
+                    </div>
+                  </td>
+                  <td>xX147565</td>
+                  <td><span class="pill external">外部用户</span></td>
+                  <td><span class="pill offline">离线</span></td>
+                  <td><span class="pill normal">未锁定</span></td>
+                  <td><span class="pill enabled">启用</span></td>
+                  <td>203.11.5.17</td>
+                  <td>2026-05-14 16:17</td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="text-btn">编辑</button>
+                      <button class="text-btn">重置密码</button>
+                      <button class="text-btn danger">删除</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="checkbox">□</span></td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-primary">
+                        <span class="user-name">帅气微风4124</span>
+                        <span class="gender-tag">♂</span>
+                      </div>
+                      <div class="user-sub">130****1468</div>
+                    </div>
+                  </td>
+                  <td>la445821</td>
+                  <td><span class="pill external">外部用户</span></td>
+                  <td><span class="pill offline">离线</span></td>
+                  <td><span class="pill normal">未锁定</span></td>
+                  <td><span class="pill enabled">启用</span></td>
+                  <td>110.88.21.45</td>
+                  <td>2026-05-14 15:31</td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="text-btn">编辑</button>
+                      <button class="text-btn">重置密码</button>
+                      <button class="text-btn danger">删除</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="footer-bar">
+            <div>分页示意：默认每页 10 条，支持大数据量场景分页浏览。</div>
+            <div class="pager">
+              <span class="page-chip active">1</span>
+              <span class="page-chip">2</span>
+              <span class="page-chip">3</span>
+              <span class="page-chip">…</span>
+              <span class="page-chip">1851</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const dashboardData = {
+      statTime: "2026-05-21 10:00:00",
+      scope: "global",
+      cards: [
+        {
+          key: "total_users",
+          label: "累计用户数",
+          value: 18508,
+          unit: "人",
+          trend: [18120, 18196, 18244, 18301, 18390, 18452, 18508],
+          compareType: "vs_yesterday",
+          compareValue: 56,
+          tooltip: "当前有效用户总数，不含已删除账号"
+        },
+        {
+          key: "today_new_users",
+          label: "今日新增用户数",
+          value: 126,
+          unit: "人",
+          trend: [98, 105, 121, 117, 132, 109, 126],
+          compareType: "vs_yesterday",
+          compareValue: 17,
+          tooltip: "今日注册或后台新增成功的去重用户数"
+        },
+        {
+          key: "today_login_users",
+          label: "今日登录用户数",
+          value: 2340,
+          unit: "人",
+          trend: [2010, 2154, 2288, 2210, 2406, 2291, 2340],
+          compareType: "vs_yesterday",
+          compareValue: 49,
+          tooltip: "今日成功登录过的去重用户数"
+        },
+        {
+          key: "online_users",
+          label: "当前系统在线人数",
+          value: 612,
+          unit: "人",
+          trend: [520, 548, 563, 571, 590, 601, 612],
+          compareType: "vs_yesterday",
+          compareValue: 21,
+          tooltip: "当前仍持有有效登录会话或有效连接的去重用户数"
+        }
+      ]
+    };
+
+    const trackingContracts = {
+      page: ["user_list_page_view", "user_list_dashboard_card_exposure", "user_list_dashboard_tooltip_open"],
+      business: ["user_register_success", "user_login_success", "user_logout", "user_session_state_changed"]
+    };
+
+    window.analyticsQueue = window.analyticsQueue || [];
+
+    function track(eventName, payload) {
+      const event = {
+        eventName,
+        payload,
+        ts: new Date().toISOString()
+      };
+      window.analyticsQueue.push(event);
+      console.log("[analytics]", event);
+    }
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat("zh-CN").format(value);
+    }
+
+    function getCompareText(card) {
+      if (card.compareType === "vs_yesterday") {
+        const prefix = card.compareValue >= 0 ? "+" : "";
+        return "较昨日 " + prefix + formatNumber(card.compareValue);
+      }
+      return "对比暂无";
+    }
+
+    function buildSparklinePoints(values, width, height, padding) {
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const safeHeight = height - padding * 2;
+      const safeWidth = width - padding * 2;
+      return values.map((value, index) => {
+        const x = padding + (safeWidth / Math.max(values.length - 1, 1)) * index;
+        const ratio = max === min ? 0.5 : (value - min) / (max - min);
+        const y = height - padding - ratio * safeHeight;
+        return x.toFixed(2) + "," + y.toFixed(2);
+      }).join(" ");
+    }
+
+    function createMetricCard(card) {
+      const wrapper = document.createElement("article");
+      wrapper.className = "metric-card";
+      wrapper.setAttribute("data-card-key", card.key);
+
+      const compareText = getCompareText(card);
+      const points = buildSparklinePoints(card.trend, 260, 58, 6);
+
+      wrapper.innerHTML = `
+        <div class="metric-head">
+          <div class="metric-label">${card.label}</div>
+          <div class="metric-help-wrap">
+            <button class="metric-help" type="button" aria-label="${card.label}指标说明">i</button>
+            <div class="metric-tooltip" role="tooltip">
+              <strong>${card.label}</strong>
+              <div>${card.tooltip}</div>
+              <div>更新时间：${dashboardData.statTime}</div>
+              <div>对比口径：${compareText}</div>
+            </div>
+          </div>
+        </div>
+        <div class="metric-value-row">
+          <div class="metric-value">${formatNumber(card.value)}</div>
+          <div class="metric-unit">${card.unit}</div>
+        </div>
+        <div class="metric-compare">${compareText}</div>
+        <div class="metric-chart" aria-hidden="true">
+          <svg viewBox="0 0 260 58" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="fill-${card.key}" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="rgba(24, 194, 200, 0.28)"></stop>
+                <stop offset="100%" stop-color="rgba(24, 194, 200, 0.02)"></stop>
+              </linearGradient>
+            </defs>
+            <polyline
+              fill="none"
+              stroke="#18c2c8"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              points="${points}">
+            </polyline>
+          </svg>
+        </div>
+        <div class="metric-foot">
+          <span class="metric-badge">近 7 天趋势</span>
+          <span>${dashboardData.scope === "global" ? "全局口径" : "筛选口径"}</span>
+        </div>
+      `;
+
+      const helpButton = wrapper.querySelector(".metric-help");
+      let hasTrackedTooltip = false;
+      const trackTooltip = () => {
+        if (hasTrackedTooltip) {
+          return;
+        }
+        hasTrackedTooltip = true;
+        track("user_list_dashboard_tooltip_open", {
+          card_key: card.key
+        });
+      };
+
+      helpButton.addEventListener("mouseenter", trackTooltip, { once: true });
+      helpButton.addEventListener("focus", trackTooltip, { once: true });
+      helpButton.addEventListener("click", trackTooltip, { once: true });
+
+      return wrapper;
+    }
+
+    function renderDashboard() {
+      document.getElementById("stat-time").textContent = "统计时间：" + dashboardData.statTime;
+      const grid = document.getElementById("metric-grid");
+      dashboardData.cards.forEach((card) => {
+        grid.appendChild(createMetricCard(card));
+      });
+    }
+
+    renderDashboard();
+
+    track("user_list_page_view", {
+      scope: dashboardData.scope,
+      contracts: trackingContracts.page
+    });
+
+    track("user_list_dashboard_card_exposure", {
+      card_keys: dashboardData.cards.map((card) => card.key),
+      stat_time: dashboardData.statTime
+    });
+  </script>
+</body>
+</html>

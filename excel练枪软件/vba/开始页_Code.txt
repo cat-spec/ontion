@@ -1,0 +1,7 @@
+Option Explicit
+
+Private Sub Worksheet_BeforeDoubleClick(ByVal Target As Range, Cancel As Boolean)
+    If Intersect(Target, Me.Range("E13:K15")) Is Nothing Then Exit Sub
+    Cancel = True
+    HandleStartAction
+End Sub

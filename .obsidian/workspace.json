@@ -11,14 +11,12 @@
             "id": "ad6e56f9a279ff36",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "front_study/技术学习/git协同工作.md",
-                "mode": "source",
-                "source": false
+                "file": "产品实习/产品实习工作文件/粗略图/Pasted image 20260601165745.png"
               },
-              "icon": "lucide-file",
-              "title": "git协同工作"
+              "icon": "lucide-image",
+              "title": "Pasted image 20260601165745"
             }
           }
         ]
@@ -107,7 +105,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 211.5
+    "width": 269.5
   },
   "right": {
     "id": "f067514dc1521a97",
@@ -193,24 +191,44 @@
       "bases:新建数据库": false
     }
   },
-  "active": "ad6e56f9a279ff36",
+  "active": "5d5178632b64c77b",
   "lastOpenFiles": [
+    "产品实习/产品实习工作文件/统计管理/统计管理需求文档.md",
+    "产品实习/产品实习工作文件/统计管理/2026-06-01-IM后台转化统计需求文档-v1.0.md",
+    "产品实习/产品实习工作文件/粗略图/Pasted image 20260601165745.png",
+    "产品实习/产品实习工作文件/粗略图/Pasted image 20260601164711.png",
+    "excel练枪软件.zip",
+    "excel练枪软件/README.md",
+    "excel练枪软件/dist/Excel练枪软件-模板.xlsm",
+    "excel练枪软件/dist",
+    "excel练枪软件/vba/结算页_Code.txt",
+    "excel练枪软件/vba/游戏页_Code.txt",
+    "excel练枪软件/vba/开始页_Code.txt",
+    "excel练枪软件/vba/ThisWorkbook_Code.txt",
+    "excel练枪软件/vba/modBootstrap.bas",
+    "excel练枪软件/vba/modGame.bas",
+    "excel练枪软件/vba/modJudge.bas",
+    "产品实习/产品实习工作文件/粗略图/Pasted image 20260601163028.png",
+    "excel练枪软件/docs/01-需求与规划/2026-06-01-Excel练枪软件-设计方案-v1.0.md",
+    "产品实习/im-概览/统计管理/转化统计1.0.png",
+    "产品实习/产品实习工作文件/消息管理/消息管理需求文档.md",
+    "产品实习/产品实习指南.md",
+    "产品实习/im-概览/统计管理/用户增长趋势1.2.png",
+    "产品实习/im-概览/统计管理/用户增长统计1.0.png",
+    "产品实习/im-概览/统计管理/用户增长趋势1.1.png",
+    "产品实习/im-概览/统计管理/用户增长趋势1.0.png",
+    "front_study/技术学习/git协同工作.md",
     "front_study/起步总结.md",
     "front_study/常见需求.md",
-    "个人图书馆.base",
     "backend_study/技术学习/node-express.md",
     "learn-scss-plan.md",
     "backend_study/技术学习/Mysql学习.md",
     "ai-agant/AI Agent 新手学习文档.md",
-    "产品实习/产品实习指南.md",
     "_Templates/project.md",
     "_Templates/project manger.md",
-    "产品实习",
     "ai-agant/ai-agant使用经历.md",
     "front_study/项目完成/类ds聊天工具/需求分析.md",
-    "ai-agant",
     "front_study/Bug一览.md",
-    "front_study/项目完成/类ds聊天工具",
     "front_study/mermaid图表语法.md",
     "books/简单的逻辑学：清晰思考的起点.md",
     "front_study/技术学习/前端复习指南书.md",
@@ -219,28 +237,8 @@
     "front_study/技术学习/预编译学习.md",
     "front_study/技术学习/nginx学习.md",
     "front_study/技术学习/Tailwind学习.md",
-    "front_study/技术学习/TypeScript与JavaScript学习.md",
-    "front_study/技术学习/uni-app.md",
-    "front_study/技术学习/vite.md",
-    "front_study/技术学习/AXIOS.md",
-    "front_study/axios学习.md",
-    "front_study/技术学习/git协同工作.md",
     "front_study/项目完成/个人技术仪表盘/生成菠萝主题图标 (5).png",
-    "front_study/项目完成/uni智慧学堂",
-    "front_study/项目完成/小程序问答",
     "years/photo/5b88cea856669f9a1c490ec878e8bcfe.jpg",
-    "years/photo",
-    "years/photo/ff98dc8602b5d669f9673986912ffb1f.jpg",
-    "years/photo/b3e289da69c0f3c238cb776a2eccc759.jpg",
-    "years",
-    "Pasted image 20260407151123.png",
-    "Pasted image 20260407151639.png",
-    "Pasted image 20260407160715.png",
-    "Pasted image 20260407151239.png",
-    "Pasted image 20260407151107.png",
-    "backend_study/技术学习",
-    "未命名.canvas",
-    "logo.png",
-    "front_study/技术学习/img"
+    "未命名.canvas"
   ]
 }
