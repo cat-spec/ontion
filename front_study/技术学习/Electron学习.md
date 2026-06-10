@@ -115,17 +115,17 @@ app.on('window-all-closed', () => {
 
 ### 2.4 代码逐条说明
 
-| 代码 | 类型 | 作用 | 注意事项 |
-| --- | --- | --- | --- |
-| `require('electron/main')` | 模块导入 | 只导入主进程可用 API | 主进程代码不要写到页面里 |
-| `app.whenReady()` | 生命周期 API | Electron 初始化完成后执行 | 窗口创建建议放在这里之后 |
-| `new BrowserWindow()` | 类实例化 | 创建桌面窗口 | 安全配置在 `webPreferences` 中 |
-| `preload` | 配置项 | 指定 preload 文件路径 | 必须使用绝对路径或可靠路径 |
-| `contextIsolation: true` | 安全配置 | 隔离 preload 和页面上下文 | 官方安全建议开启 |
-| `nodeIntegration: false` | 安全配置 | 禁止页面直接访问 Node.js | 加载远程内容时尤其重要 |
-| `sandbox: true` | 安全配置 | 启用渲染进程沙箱 | Electron 20 之后默认行为更偏向沙箱 |
-| `win.loadFile()` | 窗口方法 | 加载本地 HTML | 适合本地应用页面 |
-| `win.loadURL()` | 窗口方法 | 加载远程 URL | 加载远程页面时安全要求更高 |
+| 代码                         | 类型       | 作用                | 注意事项                     |
+| -------------------------- | -------- | ----------------- | ------------------------ |
+| `require('electron/main')` | 模块导入     | 只导入主进程可用 API      | 主进程代码不要写到页面里             |
+| `app.whenReady()`          | 生命周期 API | Electron 初始化完成后执行 | 窗口创建建议放在这里之后             |
+| `new BrowserWindow()`      | 类实例化     | 创建桌面窗口            | 安全配置在 `webPreferences` 中 |
+| `preload`                  | 配置项      | 指定 preload 文件路径   | 必须使用绝对路径或可靠路径            |
+| `contextIsolation: true`   | 安全配置     | 隔离 preload 和页面上下文 | 官方安全建议开启                 |
+| `nodeIntegration: false`   | 安全配置     | 禁止页面直接访问 Node.js  | 加载远程内容时尤其重要              |
+| `sandbox: true`            | 安全配置     | 启用渲染进程沙箱          | Electron 20 之后默认行为更偏向沙箱  |
+| `win.loadFile()`           | 窗口方法     | 加载本地 HTML         | 适合本地应用页面                 |
+| `win.loadURL()`            | 窗口方法     | 加载远程 URL          | 加载远程页面时安全要求更高            |
 
 ### 2.5 常见错误与排查
 
