@@ -1,0 +1,15 @@
+# Dependency directories
+**/node_modules/
+
+# Common frontend package manager artifacts
+**/.pnpm-store/
+**/.npm/
+**/.yarn/
+
+# Common build outputs
+**/dist/
+**/dist-ssr/
+**/release/
+
+# OS files
+.DS_Store
