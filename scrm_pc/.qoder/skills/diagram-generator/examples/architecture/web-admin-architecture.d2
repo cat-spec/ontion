@@ -1,0 +1,119 @@
+# 标准架构图示例：Web管理后台系统架构
+# 渲染命令：d2 -l elk web-admin-architecture.d2 web-admin-architecture.png
+# 适用场景：系统功能架构图、菜单结构图
+
+direction: down
+
+title: 系统功能架构图 {
+  shape: text
+  style.font-size: 20
+  style.bold: true
+}
+
+# 顶层：用户入口
+用户入口: {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+  style.stroke: "#6c8ebf"
+  style.font-size: 14
+  style.bold: true
+
+  Web管理后台: Web管理后台 {
+    shape: rectangle
+    style.fill: "#dae8fc"
+  }
+
+  移动端App: 移动端App {
+    shape: rectangle
+    style.fill: "#dae8fc"
+  }
+}
+
+# 功能模块层
+功能模块: {
+  shape: rectangle
+  style.fill: "#e8f5e9"
+  style.stroke: "#82b366"
+  style.font-size: 14
+  style.bold: true
+
+  系统管理: 系统管理 {
+    shape: rectangle
+    style.fill: "#d5e8d4"
+
+    用户管理: 用户管理 { shape: rectangle; style.fill: "#ffffff" }
+    角色管理: 角色管理 { shape: rectangle; style.fill: "#ffffff" }
+    权限管理: 权限管理 { shape: rectangle; style.fill: "#ffffff" }
+    菜单管理: 菜单管理 { shape: rectangle; style.fill: "#ffffff" }
+  }
+
+  业务管理: 业务管理 {
+    shape: rectangle
+    style.fill: "#d5e8d4"
+
+    数据列表: 数据列表 { shape: rectangle; style.fill: "#ffffff" }
+    数据详情: 数据详情 { shape: rectangle; style.fill: "#ffffff" }
+    数据统计: 数据统计 { shape: rectangle; style.fill: "#ffffff" }
+  }
+
+  报表中心: 报表中心 {
+    shape: rectangle
+    style.fill: "#d5e8d4"
+
+    统计报表: 统计报表 { shape: rectangle; style.fill: "#ffffff" }
+    数据导出: 数据导出 { shape: rectangle; style.fill: "#ffffff" }
+  }
+}
+
+# 服务层
+服务层: {
+  shape: rectangle
+  style.fill: "#fff3e0"
+  style.stroke: "#d6b656"
+  style.font-size: 14
+  style.bold: true
+
+  后端API: 后端API服务 {
+    shape: rectangle
+    style.fill: "#ffe6cc"
+  }
+
+  认证服务: 认证授权服务 {
+    shape: rectangle
+    style.fill: "#ffe6cc"
+  }
+
+  消息服务: 消息通知服务 {
+    shape: rectangle
+    style.fill: "#ffe6cc"
+  }
+}
+
+# 数据层
+数据层: {
+  shape: rectangle
+  style.fill: "#f3e5f5"
+  style.stroke: "#9673a6"
+  style.font-size: 14
+  style.bold: true
+
+  MySQL数据库: MySQL数据库 {
+    shape: cylinder
+    style.fill: "#e1d5e7"
+  }
+
+  Redis缓存: Redis缓存 {
+    shape: cylinder
+    style.fill: "#e1d5e7"
+  }
+
+  文件存储: 文件存储 {
+    shape: cylinder
+    style.fill: "#e1d5e7"
+  }
+}
+
+# 连接
+用户入口 -> 功能模块: 访问
+功能模块 -> 服务层: 调用
+服务层 -> 数据层: 读写

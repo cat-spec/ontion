@@ -1,0 +1,92 @@
+direction: down
+
+start: 用户访问系统登录页 {
+  shape: oval
+  style.fill: "#e8f5e9"
+}
+
+display: 页面展示\n系统Logo、系统名称、登录表单 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+fill_form: 用户填写登录信息\n用户名、密码、角色选择 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+click_login: 用户点击【登录】按钮 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+validate: 系统验证用户名密码 {
+  shape: diamond
+  style.fill: "#fff3e0"
+}
+
+load_permissions: 根据选中角色\n加载权限数据 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+redirect: 跳转到风险画像大屏 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+show_error: 提示"用户名或密码错误" {
+  shape: rectangle
+  style.fill: "#ffebee"
+}
+
+record_failure: 记录失败次数 {
+  shape: rectangle
+  style.fill: "#ffebee"
+}
+
+check_count: 失败次数判断 {
+  shape: diamond
+  style.fill: "#fff3e0"
+}
+
+lock_account: 账号锁定30分钟 {
+  shape: rectangle
+  style.fill: "#ffcdd2"
+}
+
+show_lock: 提示锁定信息 {
+  shape: rectangle
+  style.fill: "#ffcdd2"
+}
+
+end_success: 登录成功 {
+  shape: oval
+  style.fill: "#e8f5e9"
+}
+
+end_locked: 账号已锁定 {
+  shape: oval
+  style.fill: "#ffcdd2"
+}
+
+# 连接
+start -> display
+display -> fill_form
+fill_form -> click_login
+click_login -> validate
+
+validate -> load_permissions: 验证通过
+validate -> show_error: 密码错误
+
+load_permissions -> redirect
+redirect -> end_success
+
+show_error -> record_failure
+record_failure -> check_count
+
+check_count -> fill_form: < 5次
+check_count -> lock_account: = 5次
+
+lock_account -> show_lock
+show_lock -> end_locked

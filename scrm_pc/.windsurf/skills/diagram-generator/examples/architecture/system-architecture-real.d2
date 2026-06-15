@@ -1,0 +1,104 @@
+direction: down
+
+# 核心功能层
+core: 核心功能 {
+  style.fill: "#f0f4ff"
+  style.stroke: "#4a90e2"
+  style.stroke-dash: 3
+
+  dashboard: 风险画像大屏 {
+    shape: rectangle
+    style.fill: "#e3f2fd"
+    style.stroke: "#1976d2"
+    style.font-size: 13
+  }
+
+  station: 库站管理 {
+    shape: rectangle
+    style.fill: "#e3f2fd"
+    style.stroke: "#1976d2"
+    style.font-size: 13
+  }
+}
+
+# 风险管理层
+risk: 风险管理 {
+  style.fill: "#fff8e1"
+  style.stroke: "#f57c00"
+  style.stroke-dash: 3
+
+  static: 静态风险管理\n检查问题台账 {
+    shape: rectangle
+    style.fill: "#fff3e0"
+    style.stroke: "#f57c00"
+    style.font-size: 12
+  }
+
+  inherent: 固有风险管理\n固有风险规则设置 {
+    shape: rectangle
+    style.fill: "#fff3e0"
+    style.stroke: "#f57c00"
+    style.font-size: 12
+  }
+
+  dynamic: 动态风险管理\n检查问题风险规则设置 {
+    shape: rectangle
+    style.fill: "#fff3e0"
+    style.stroke: "#f57c00"
+    style.font-size: 12
+  }
+}
+
+# 系统管理层
+system: 系统管理 {
+  style.fill: "#f3e5f5"
+  style.stroke: "#7b1fa2"
+  style.stroke-dash: 3
+
+  org: 组织管理 {
+    style.fill: "#f3e5f5"
+    style.stroke: "#8e24aa"
+    style.stroke-dash: 3
+
+    user: 用户管理 {
+      shape: rectangle
+      style.fill: "#e1bee7"
+      style.stroke: "#8e24aa"
+      style.font-size: 12
+    }
+
+    org_mgmt: 组织管理 {
+      shape: rectangle
+      style.fill: "#e1bee7"
+      style.stroke: "#8e24aa"
+      style.font-size: 12
+    }
+  }
+
+  permission: 权限管理 {
+    style.fill: "#f3e5f5"
+    style.stroke: "#8e24aa"
+    style.stroke-dash: 3
+
+    role: 角色管理 {
+      shape: rectangle
+      style.fill: "#e1bee7"
+      style.stroke: "#8e24aa"
+      style.font-size: 12
+    }
+
+    menu: 菜单管理 {
+      shape: rectangle
+      style.fill: "#e1bee7"
+      style.stroke: "#8e24aa"
+      style.font-size: 12
+    }
+  }
+
+  config: 系统配置\n（仅系统管理员） {
+    shape: rectangle
+    style.fill: "#e1bee7"
+    style.stroke: "#8e24aa"
+    style.font-size: 12
+  }
+}

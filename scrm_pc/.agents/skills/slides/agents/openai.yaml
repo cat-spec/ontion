@@ -1,0 +1,5 @@
+interface:
+  display_name: "ckm:slides"
+  short_description: "Create strategic HTML presentations with Chart.js, design tokens, responsive lay"
+policy:
+  allow_implicit_invocation: true

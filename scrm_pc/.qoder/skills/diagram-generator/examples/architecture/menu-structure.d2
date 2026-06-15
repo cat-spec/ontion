@@ -1,0 +1,136 @@
+# 标准架构图示例：系统菜单结构图
+# 渲染命令：d2 -l elk menu-structure.d2 menu-structure.png
+# 适用场景：需求说明书 3.1 总体功能架构，展示完整菜单层级
+
+direction: down
+
+title: [系统名称]功能架构图 {
+  shape: text
+  style.font-size: 20
+  style.bold: true
+}
+
+系统: [系统名称] {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+  style.stroke: "#6c8ebf"
+  style.bold: true
+  style.font-size: 16
+}
+
+# 一级菜单
+首页: 首页\n（一级菜单） {
+  shape: rectangle
+  style.fill: "#dae8fc"
+  style.stroke: "#6c8ebf"
+}
+
+业务模块A: 业务模块A\n（一级菜单） {
+  shape: rectangle
+  style.fill: "#dae8fc"
+  style.stroke: "#6c8ebf"
+}
+
+业务模块B: 业务模块B\n（一级菜单） {
+  shape: rectangle
+  style.fill: "#dae8fc"
+  style.stroke: "#6c8ebf"
+}
+
+报表统计: 报表统计\n（一级菜单） {
+  shape: rectangle
+  style.fill: "#dae8fc"
+  style.stroke: "#6c8ebf"
+}
+
+系统管理: 系统管理\n（一级菜单） {
+  shape: rectangle
+  style.fill: "#dae8fc"
+  style.stroke: "#6c8ebf"
+}
+
+# 业务模块A 的二级菜单
+A列表管理: A列表管理\n（二级菜单） {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+  style.stroke: "#82b366"
+}
+
+A分类管理: A分类管理\n（二级菜单） {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+  style.stroke: "#82b366"
+}
+
+# 业务模块B 的二级菜单
+B列表管理: B列表管理\n（二级菜单） {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+  style.stroke: "#82b366"
+}
+
+B审批管理: B审批管理\n（二级菜单） {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+  style.stroke: "#82b366"
+}
+
+B配置管理: B配置管理\n（二级菜单） {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+  style.stroke: "#82b366"
+}
+
+# 报表统计 的二级菜单
+数据概览: 数据概览\n（二级菜单） {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+  style.stroke: "#82b366"
+}
+
+趋势分析: 趋势分析\n（二级菜单） {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+  style.stroke: "#82b366"
+}
+
+# 系统管理 的二级菜单
+用户管理: 用户管理\n（二级菜单） {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+  style.stroke: "#82b366"
+}
+
+角色管理: 角色管理\n（二级菜单） {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+  style.stroke: "#82b366"
+}
+
+操作日志: 操作日志\n（二级菜单） {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+  style.stroke: "#82b366"
+}
+
+# 连接：系统 → 一级菜单
+系统 -> 首页
+系统 -> 业务模块A
+系统 -> 业务模块B
+系统 -> 报表统计
+系统 -> 系统管理
+
+# 连接：一级菜单 → 二级菜单
+业务模块A -> A列表管理
+业务模块A -> A分类管理
+
+业务模块B -> B列表管理
+业务模块B -> B审批管理
+业务模块B -> B配置管理
+
+报表统计 -> 数据概览
+报表统计 -> 趋势分析
+
+系统管理 -> 用户管理
+系统管理 -> 角色管理
+系统管理 -> 操作日志

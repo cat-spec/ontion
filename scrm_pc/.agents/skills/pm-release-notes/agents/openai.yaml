@@ -1,0 +1,5 @@
+interface:
+  display_name: "pm-release-notes"
+  short_description: "产品发版说明撰写技能。适用场景：(1) App Store/应用市场更新说明，(2) 对外公告发版说明，(3) 面向用户的功能更新介绍，(4) 内部发版变更记录"
+policy:
+  allow_implicit_invocation: true

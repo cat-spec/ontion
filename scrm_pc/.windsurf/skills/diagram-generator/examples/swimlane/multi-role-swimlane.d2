@@ -1,0 +1,119 @@
+# 标准泳道图示例：多角色业务协作流程
+# 渲染命令：d2 -l elk multi-role-swimlane.d2 multi-role-swimlane.png
+# 适用场景：涉及多个角色协作的业务流程（巡检、审批、工单处理等）
+
+direction: right
+
+# 定义泳道（角色）
+普通用户: {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+  style.stroke: "#6c8ebf"
+}
+
+系统管理员: {
+  shape: rectangle
+  style.fill: "#e8f5e9"
+  style.stroke: "#82b366"
+}
+
+审批人: {
+  shape: rectangle
+  style.fill: "#fff3e0"
+  style.stroke: "#d6b656"
+}
+
+系统: {
+  shape: rectangle
+  style.fill: "#f3e5f5"
+  style.stroke: "#9673a6"
+}
+
+# 普通用户操作
+普通用户.发起申请: 发起申请 {
+  shape: rectangle
+  style.fill: "#dae8fc"
+}
+
+普通用户.填写表单: 填写申请表单 {
+  shape: rectangle
+  style.fill: "#dae8fc"
+}
+
+普通用户.提交: 点击提交 {
+  shape: rectangle
+  style.fill: "#dae8fc"
+}
+
+普通用户.查看结果: 查看审批结果 {
+  shape: rectangle
+  style.fill: "#dae8fc"
+}
+
+# 系统操作
+系统.接收申请: 接收申请\n生成申请单号 {
+  shape: rectangle
+  style.fill: "#e1d5e7"
+}
+
+系统.通知审批: 发送通知\n给审批人 {
+  shape: rectangle
+  style.fill: "#e1d5e7"
+}
+
+系统.通知结果: 发送审批结果\n通知给申请人 {
+  shape: rectangle
+  style.fill: "#e1d5e7"
+}
+
+# 审批人操作
+审批人.收到通知: 收到审批通知 {
+  shape: rectangle
+  style.fill: "#ffe6cc"
+}
+
+审批人.查看详情: 查看申请详情 {
+  shape: rectangle
+  style.fill: "#ffe6cc"
+}
+
+审批人.决策: 审批决策 {
+  shape: diamond
+  style.fill: "#fff3e0"
+}
+
+审批人.通过: 填写通过意见 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+审批人.拒绝: 填写拒绝原因 {
+  shape: rectangle
+  style.fill: "#fce4ec"
+}
+
+# 系统管理员操作
+系统管理员.配置: 配置审批流程 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+系统管理员.查看统计: 查看申请统计 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+# 流程连接
+普通用户.发起申请 -> 普通用户.填写表单
+普通用户.填写表单 -> 普通用户.提交
+普通用户.提交 -> 系统.接收申请
+系统.接收申请 -> 系统.通知审批
+系统.通知审批 -> 审批人.收到通知
+审批人.收到通知 -> 审批人.查看详情
+审批人.查看详情 -> 审批人.决策
+审批人.决策 -> 审批人.通过: 同意
+审批人.决策 -> 审批人.拒绝: 拒绝
+审批人.通过 -> 系统.通知结果
+审批人.拒绝 -> 系统.通知结果
+系统.通知结果 -> 普通用户.查看结果
+系统管理员.配置 -> 系统.接收申请: 流程配置

@@ -1,0 +1,75 @@
+@startuml
+' 标准时序图示例：审批流程
+' 渲染命令：python3 scripts/render_diagram.py --type plantuml --file approval-flow.puml --output approval-flow.png
+' 适用场景：需要多角色参与的审批业务（工单、申请、报告审核等）
+
+skinparam backgroundColor #FFFFFF
+skinparam sequenceMessageAlign center
+
+actor 申请人
+actor 审批人
+participant "业务页面" as Frontend
+participant "后端服务" as Backend
+database "数据库" as DB
+
+== 提交申请流程 ==
+
+申请人 -> Frontend: 填写申请表单\n点击【提交申请】
+activate Frontend
+Frontend -> Backend: POST /api/apply\n(携带申请数据)
+activate Backend
+Backend -> DB: 创建申请记录\n(status=待审批)
+activate DB
+DB --> Backend: 返回申请ID
+deactivate DB
+Backend -> Backend: 发送通知给审批人
+Backend --> Frontend: 返回成功响应
+deactivate Backend
+Frontend --> 申请人: 显示"申请已提交"\n跳转到申请列表
+deactivate Frontend
+
+== 审批人处理流程 ==
+
+审批人 -> Frontend: 查看待审批列表\n点击【审批】
+activate Frontend
+Frontend -> Backend: GET /api/apply/:id\n(请求申请详情)
+activate Backend
+Backend -> DB: 查询申请详情
+activate DB
+DB --> Backend: 返回申请数据
+deactivate DB
+Backend --> Frontend: 返回申请详情
+deactivate Backend
+Frontend --> 审批人: 展示申请详情
+deactivate Frontend
+
+审批人 -> Frontend: 填写审批意见\n点击【通过】或【拒绝】
+activate Frontend
+Frontend -> Backend: PUT /api/apply/:id/review\n(携带审批结果和意见)
+activate Backend
+Backend -> DB: 更新申请状态\n记录审批意见
+activate DB
+DB --> Backend: 返回更新结果
+deactivate DB
+Backend -> Backend: 发送审批结果通知给申请人
+Backend --> Frontend: 返回成功响应
+deactivate Backend
+Frontend --> 审批人: 显示"审批完成"\n刷新列表
+deactivate Frontend
+
+== 申请人查看结果流程 ==
+
+申请人 -> Frontend: 查看申请状态
+activate Frontend
+Frontend -> Backend: GET /api/apply/:id
+activate Backend
+Backend -> DB: 查询申请详情
+activate DB
+DB --> Backend: 返回最新状态
+deactivate DB
+Backend --> Frontend: 返回申请详情\n(含审批意见)
+deactivate Backend
+Frontend --> 申请人: 展示审批结果\n和审批意见
+deactivate Frontend
+
+@enduml

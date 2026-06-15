@@ -1,0 +1,97 @@
+@startuml
+' 标准时序图示例：基础 CRUD 操作
+' 渲染命令：python3 scripts/render_diagram.py --type plantuml --file basic-crud.puml --output basic-crud.png
+' 适用场景：列表页的增删改查交互时序
+
+skinparam backgroundColor #FFFFFF
+skinparam sequenceMessageAlign center
+
+actor 用户
+participant "[功能名]页面" as Frontend
+participant "后端服务" as Backend
+database "数据库" as DB
+
+== 查看列表流程 ==
+
+用户 -> Frontend: 进入[功能名]页面
+activate Frontend
+Frontend -> Backend: 请求[数据]列表\n(page=1, pageSize=20)
+activate Backend
+Backend -> DB: 查询[数据]列表
+activate DB
+DB --> Backend: 返回列表数据
+deactivate DB
+Backend --> Frontend: 返回 { list, total }
+deactivate Backend
+Frontend --> 用户: 展示[数据]列表
+deactivate Frontend
+
+== 新增流程 ==
+
+用户 -> Frontend: 点击【新增】按钮
+activate Frontend
+Frontend --> 用户: 打开新增弹窗
+deactivate Frontend
+
+用户 -> Frontend: 填写表单，点击【保存】
+activate Frontend
+Frontend -> Backend: POST /api/[resource]\n(携带表单数据)
+activate Backend
+Backend -> DB: 插入新记录
+activate DB
+DB --> Backend: 返回插入结果
+deactivate DB
+Backend --> Frontend: 返回成功响应
+deactivate Backend
+Frontend --> 用户: 显示"新增成功"\n关闭弹窗，刷新列表
+deactivate Frontend
+
+== 编辑流程 ==
+
+用户 -> Frontend: 点击【编辑】按钮
+activate Frontend
+Frontend -> Backend: GET /api/[resource]/:id\n(请求详情数据)
+activate Backend
+Backend -> DB: 查询记录详情
+activate DB
+DB --> Backend: 返回详情数据
+deactivate DB
+Backend --> Frontend: 返回详情数据
+deactivate Backend
+Frontend --> 用户: 打开编辑弹窗\n回显原有数据
+deactivate Frontend
+
+用户 -> Frontend: 修改数据，点击【保存】
+activate Frontend
+Frontend -> Backend: PUT /api/[resource]/:id\n(携带修改数据)
+activate Backend
+Backend -> DB: 更新记录
+activate DB
+DB --> Backend: 返回更新结果
+deactivate DB
+Backend --> Frontend: 返回成功响应
+deactivate Backend
+Frontend --> 用户: 显示"更新成功"\n关闭弹窗，刷新列表
+deactivate Frontend
+
+== 删除流程 ==
+
+用户 -> Frontend: 点击【删除】按钮
+activate Frontend
+Frontend --> 用户: 弹出确认对话框
+deactivate Frontend
+
+用户 -> Frontend: 点击【确认删除】
+activate Frontend
+Frontend -> Backend: DELETE /api/[resource]/:id
+activate Backend
+Backend -> DB: 软删除记录\n(status=0)
+activate DB
+DB --> Backend: 返回删除结果
+deactivate DB
+Backend --> Frontend: 返回成功响应
+deactivate Backend
+Frontend --> 用户: 显示"删除成功"\n刷新列表
+deactivate Frontend
+
+@enduml

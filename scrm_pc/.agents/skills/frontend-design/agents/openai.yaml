@@ -1,0 +1,5 @@
+interface:
+  display_name: "frontend-design"
+  short_description: "创建高质量、有设计感的前端界面。触发场景：用户需要构建网页组件、页面、海报或应用时触发，包括网站、落地页、仪表盘、React 组件、HTML/CSS 布局，或对"
+policy:
+  allow_implicit_invocation: true

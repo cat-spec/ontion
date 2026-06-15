@@ -1,0 +1,5 @@
+interface:
+  display_name: "pm-market-research"
+  short_description: "产品经理市场调研与竞品分析技能。适用场景：(1) 需要做市场规模分析（TAM/SAM/SOM），(2) 进行竞品对比分析，(3) 分析行业趋势和机会，(4) 输"
+policy:
+  allow_implicit_invocation: true

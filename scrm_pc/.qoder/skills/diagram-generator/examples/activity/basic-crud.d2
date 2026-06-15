@@ -1,0 +1,135 @@
+# 标准活动图示例：基础 CRUD 操作流程
+# 渲染命令：d2 -l elk basic-crud.d2 basic-crud.png
+# 适用场景：列表页的新增/编辑/删除操作流程
+
+direction: down
+
+start: 进入[功能名]页面 {
+  shape: oval
+  style.fill: "#e8f5e9"
+}
+
+view_list: 查看[数据]列表\n(默认展示全部数据) {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+choose: 选择操作 {
+  shape: diamond
+  style.fill: "#fff3e0"
+}
+
+# 新增分支
+add_click: 点击【新增】按钮 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+add_fill: 填写表单信息 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+add_submit: 点击【保存】 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+add_check: 数据验证 {
+  shape: diamond
+  style.fill: "#fff3e0"
+}
+
+add_success: 保存成功\n刷新列表 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+add_fail: 显示错误提示\n停留在表单 {
+  shape: rectangle
+  style.fill: "#fce4ec"
+}
+
+# 编辑分支
+edit_click: 点击【编辑】按钮 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+edit_form: 修改表单信息 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+edit_submit: 点击【保存】 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+edit_check: 数据验证 {
+  shape: diamond
+  style.fill: "#fff3e0"
+}
+
+edit_success: 更新成功\n刷新列表 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+edit_fail: 显示错误提示\n停留在表单 {
+  shape: rectangle
+  style.fill: "#fce4ec"
+}
+
+# 删除分支
+delete_click: 点击【删除】按钮 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+delete_confirm: 二次确认弹窗 {
+  shape: diamond
+  style.fill: "#fff3e0"
+}
+
+delete_success: 删除成功\n刷新列表 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+end: 结束 {
+  shape: oval
+  style.fill: "#e8f5e9"
+}
+
+# 连接
+start -> view_list
+view_list -> choose
+
+choose -> add_click: 新增
+choose -> edit_click: 编辑
+choose -> delete_click: 删除
+
+# 新增流程
+add_click -> add_fill
+add_fill -> add_submit
+add_submit -> add_check
+add_check -> add_success: 验证通过
+add_check -> add_fail: 验证失败
+add_fail -> add_fill: 重新填写
+add_success -> end
+
+# 编辑流程
+edit_click -> edit_form
+edit_form -> edit_submit
+edit_submit -> edit_check
+edit_check -> edit_success: 验证通过
+edit_check -> edit_fail: 验证失败
+edit_fail -> edit_form: 重新填写
+edit_success -> end
+
+# 删除流程
+delete_click -> delete_confirm
+delete_confirm -> delete_success: 确认删除
+delete_confirm -> end: 取消
+delete_success -> end

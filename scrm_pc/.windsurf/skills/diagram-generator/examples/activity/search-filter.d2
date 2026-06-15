@@ -1,0 +1,97 @@
+# 标准活动图示例：筛选查询流程
+# 渲染命令：d2 -l elk search-filter.d2 search-filter.png
+# 适用场景：列表页的筛选、搜索、重置操作
+
+direction: down
+
+start: 进入列表页面 {
+  shape: oval
+  style.fill: "#e8f5e9"
+}
+
+load_default: 加载默认数据\n(第1页，每页20条) {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+choose: 选择操作 {
+  shape: diamond
+  style.fill: "#fff3e0"
+}
+
+# 筛选查询分支
+filter_input: 输入筛选条件\n(关键词/状态/时间范围等) {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+filter_click: 点击【查询】 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+filter_result: 刷新列表\n展示筛选结果 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+no_data_check: 是否有数据 {
+  shape: diamond
+  style.fill: "#fff3e0"
+}
+
+show_empty: 显示"暂无数据" {
+  shape: rectangle
+  style.fill: "#fce4ec"
+}
+
+# 重置分支
+reset_click: 点击【重置】 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+reset_result: 清空筛选条件\n恢复默认数据 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+# 分页分支
+page_click: 点击分页按钮 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+page_result: 加载对应页数据 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+end: 结束 {
+  shape: oval
+  style.fill: "#e8f5e9"
+}
+
+# 连接
+start -> load_default
+load_default -> choose
+
+choose -> filter_input: 筛选查询
+choose -> reset_click: 重置
+choose -> page_click: 翻页
+
+# 筛选流程
+filter_input -> filter_click
+filter_click -> filter_result
+filter_result -> no_data_check
+no_data_check -> show_empty: 无数据
+no_data_check -> end: 有数据
+show_empty -> end
+
+# 重置流程
+reset_click -> reset_result
+reset_result -> end
+
+# 分页流程
+page_click -> page_result
+page_result -> end

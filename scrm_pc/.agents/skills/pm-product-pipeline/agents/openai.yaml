@@ -1,0 +1,5 @@
+interface:
+  display_name: "pm-product-pipeline"
+  short_description: "产品 AI Agent 全流程编排技能。将「市场调研 → 用户画像 → 功能优先级 → 产品路线图 → 需求说明书 → 前端原型 → 测试用例 → 操作手册 →"
+policy:
+  allow_implicit_invocation: true

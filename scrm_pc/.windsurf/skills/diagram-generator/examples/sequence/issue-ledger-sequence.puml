@@ -1,0 +1,77 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam sequenceMessageAlign center
+
+actor 用户
+participant "问题台账页面" as Frontend
+participant "后端服务" as Backend
+database "数据库" as DB
+
+== 查看问题台账流程 ==
+
+用户 -> Frontend: 进入检查问题台账页面
+activate Frontend
+Frontend -> Backend: 请求问题列表\n(默认当月数据)
+activate Backend
+Backend -> DB: 查询问题数据\n(按权限范围过滤)
+activate DB
+DB --> Backend: 返回问题列表
+deactivate DB
+Backend --> Frontend: 返回问题数据
+deactivate Backend
+Frontend --> 用户: 展示问题列表
+deactivate Frontend
+
+== 筛选查询流程 ==
+
+用户 -> Frontend: 设置筛选条件\n(时间/单位/严重程度/整改状态)
+用户 -> Frontend: 点击【查询】
+
+activate Frontend
+Frontend -> Backend: 提交筛选请求
+activate Backend
+Backend -> DB: 按条件查询问题
+activate DB
+DB --> Backend: 返回筛选结果
+deactivate DB
+Backend --> Frontend: 返回问题列表
+deactivate Backend
+Frontend --> 用户: 刷新问题列表
+deactivate Frontend
+
+== 重置筛选流程 ==
+
+用户 -> Frontend: 点击【重置】
+activate Frontend
+Frontend -> Backend: 请求默认数据\n(当月数据)
+activate Backend
+Backend -> DB: 查询当月问题
+activate DB
+DB --> Backend: 返回问题列表
+deactivate DB
+Backend --> Frontend: 返回默认数据
+deactivate Backend
+Frontend --> 用户: 恢复默认条件\n刷新列表
+deactivate Frontend
+
+== 查看问题详情流程 ==
+
+用户 -> Frontend: 点击【详情】按钮
+activate Frontend
+Frontend -> Backend: 请求问题详情
+activate Backend
+Backend -> DB: 查询问题完整信息
+activate DB
+DB --> Backend: 返回详情数据
+deactivate DB
+Backend --> Frontend: 返回问题详情
+deactivate Backend
+Frontend --> 用户: 打开详情弹窗\n展示完整信息
+deactivate Frontend
+
+用户 -> Frontend: 点击【关闭】
+activate Frontend
+Frontend --> 用户: 关闭详情弹窗
+deactivate Frontend
+
+@enduml

@@ -1,0 +1,92 @@
+direction: down
+
+start: 进入检查问题台账页面 {
+  shape: oval
+  style.fill: "#e8f5e9"
+}
+
+view_list: 查看问题列表\n(默认当月数据) {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+choose: 选择操作 {
+  shape: diamond
+  style.fill: "#fff3e0"
+}
+
+# 筛选查询分支
+filter_set: 设置筛选条件\n(时间/单位/严重程度/整改状态) {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+filter_query: 点击【查询】 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+filter_result: 刷新问题列表 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+# 重置筛选分支
+reset_click: 点击【重置】 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+reset_result: 恢复默认条件\n刷新列表 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+# 查看详情分支
+detail_click: 点击【详情】按钮 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+detail_show: 打开详情弹窗\n展示完整问题信息 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+detail_close: 点击【关闭】 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+detail_end: 关闭弹窗 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+end: 结束 {
+  shape: oval
+  style.fill: "#e8f5e9"
+}
+
+# 连接
+start -> view_list
+view_list -> choose
+
+choose -> filter_set: 筛选查询
+choose -> reset_click: 重置筛选
+choose -> detail_click: 查看详情
+
+# 筛选查询流程
+filter_set -> filter_query
+filter_query -> filter_result
+filter_result -> end
+
+# 重置筛选流程
+reset_click -> reset_result
+reset_result -> end
+
+# 查看详情流程
+detail_click -> detail_show
+detail_show -> detail_close
+detail_close -> detail_end
+detail_end -> end

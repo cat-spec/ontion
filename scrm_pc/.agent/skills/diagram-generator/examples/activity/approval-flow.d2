@@ -1,0 +1,83 @@
+# 标准活动图示例：审批流程
+# 渲染命令：d2 -l elk approval-flow.d2 approval-flow.png
+# 适用场景：需要多级审批的业务流程（如工单、申请、报告等）
+
+direction: down
+
+start: 发起申请 {
+  shape: oval
+  style.fill: "#e8f5e9"
+}
+
+fill_form: 填写申请信息 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+submit: 点击【提交申请】 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+form_check: 信息完整性验证 {
+  shape: diamond
+  style.fill: "#fff3e0"
+}
+
+form_fail: 显示必填项提示\n停留在表单 {
+  shape: rectangle
+  style.fill: "#fce4ec"
+}
+
+pending: 申请进入待审批状态\n通知审批人 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+review: 审批人查看申请详情 {
+  shape: rectangle
+  style.fill: "#e3f2fd"
+}
+
+approve_check: 审批决定 {
+  shape: diamond
+  style.fill: "#fff3e0"
+}
+
+approved: 审批通过\n通知申请人 {
+  shape: rectangle
+  style.fill: "#d5e8d4"
+}
+
+rejected: 审批拒绝\n填写拒绝原因\n通知申请人 {
+  shape: rectangle
+  style.fill: "#fce4ec"
+}
+
+resubmit_check: 申请人是否重新提交 {
+  shape: diamond
+  style.fill: "#fff3e0"
+}
+
+end: 结束 {
+  shape: oval
+  style.fill: "#e8f5e9"
+}
+
+# 连接
+start -> fill_form
+fill_form -> submit
+submit -> form_check
+form_check -> form_fail: 验证失败
+form_check -> pending: 验证通过
+form_fail -> fill_form: 修改后重新提交
+
+pending -> review
+review -> approve_check
+approve_check -> approved: 通过
+approve_check -> rejected: 拒绝
+
+approved -> end
+rejected -> resubmit_check
+resubmit_check -> fill_form: 重新提交
+resubmit_check -> end: 放弃申请

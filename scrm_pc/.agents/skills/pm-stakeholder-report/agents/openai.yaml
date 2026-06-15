@@ -1,0 +1,5 @@
+interface:
+  display_name: "pm-stakeholder-report"
+  short_description: "产品经理汇报材料生成技能。适用场景：(1) 月度/季度产品汇报，(2) 向管理层/投资人汇报产品进展，(3) 跨部门产品Review，(4) 产品立项/需求评审"
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,131 @@
+direction: down
+
+# 数据采集层
+采集层: 数据采集层 {
+  style.fill: "#dae8fc"
+  style.stroke: "#6c8ebf"
+  style.font-size: 16
+  style.bold: true
+
+  库站基础信息: "库站基础信息\n（业态、销量）" {
+    style.fill: "#ffffff"
+    style.stroke: "#6c8ebf"
+  }
+  检查问题数据: "检查问题数据\n（第三方推送）" {
+    style.fill: "#ffffff"
+    style.stroke: "#6c8ebf"
+  }
+}
+
+# 风险计算层
+计算层: 风险计算层 {
+  style.fill: "#d5e8d4"
+  style.stroke: "#82b366"
+  style.font-size: 16
+  style.bold: true
+
+  业态风险值: "业态风险值\n= Σ业态赋值" {
+    style.fill: "#ffffff"
+    style.stroke: "#82b366"
+  }
+  销量风险值: "销量风险值\n= Σ销量分档得分" {
+    style.fill: "#ffffff"
+    style.stroke: "#82b366"
+  }
+  固有风险值: "固有风险值\n= 业态 + 销量" {
+    style.fill: "#ffffff"
+    style.stroke: "#82b366"
+    style.bold: true
+  }
+  单问题得分: "单问题基础风险得分\n= (严重×60% + 频次×40%)\n× 整改修正系数" {
+    style.fill: "#ffffff"
+    style.stroke: "#82b366"
+  }
+  动态风险值: "动态风险值\n= Σ单问题得分" {
+    style.fill: "#ffffff"
+    style.stroke: "#82b366"
+    style.bold: true
+  }
+
+  业态风险值 -> 固有风险值
+  销量风险值 -> 固有风险值
+  单问题得分 -> 动态风险值
+}
+
+# 等级判定层
+判定层: 等级判定层 {
+  style.fill: "#fff2cc"
+  style.stroke: "#d6b656"
+  style.font-size: 16
+  style.bold: true
+
+  综合得分: "综合风险得分\n= 固有 + 动态" {
+    style.fill: "#ffffff"
+    style.stroke: "#d6b656"
+    style.bold: true
+  }
+  等级判定: 风险等级判定 {
+    shape: diamond
+    style.fill: "#fff2cc"
+    style.stroke: "#d6b656"
+  }
+  低风险: "低风险（蓝）\n≤10分" {
+    style.fill: "#dae8fc"
+    style.stroke: "#6c8ebf"
+  }
+  一般风险: "一般风险（黄）\n10~15分" {
+    style.fill: "#fff2cc"
+    style.stroke: "#d6b656"
+  }
+  较大风险: "较大风险（橙）\n15~20分" {
+    style.fill: "#ffe6cc"
+    style.stroke: "#d79b00"
+  }
+  重大风险: "重大风险（红）\n＞20分" {
+    style.fill: "#f8cecc"
+    style.stroke: "#b85450"
+  }
+
+  综合得分 -> 等级判定
+  等级判定 -> 低风险: "≤10"
+  等级判定 -> 一般风险: "10~15"
+  等级判定 -> 较大风险: "15~20"
+  等级判定 -> 重大风险: "＞20"
+}
+
+# 汇总展示层
+展示层: 汇总展示层 {
+  style.fill: "#e1d5e7"
+  style.stroke: "#9673a6"
+  style.font-size: 16
+  style.bold: true
+
+  上级汇总: "上级组织风险汇总\n县/区 = Σ加能站\n地市 = Σ县/区" {
+    style.fill: "#ffffff"
+    style.stroke: "#9673a6"
+  }
+  上级等级判定: "上级等级判定\n（排名百分位）" {
+    style.fill: "#ffffff"
+    style.stroke: "#9673a6"
+  }
+  风险画像大屏: "风险画像大屏\n（全省/地市/区片/库站）" {
+    style.fill: "#9673a6"
+    style.stroke: "#9673a6"
+    style.font-color: "#ffffff"
+    style.bold: true
+  }
+
+  上级汇总 -> 上级等级判定
+  上级等级判定 -> 风险画像大屏
+}
+
+# 跨层连接
+采集层.库站基础信息 -> 计算层.业态风险值
+采集层.库站基础信息 -> 计算层.销量风险值
+采集层.检查问题数据 -> 计算层.单问题得分
+计算层.固有风险值 -> 判定层.综合得分
+计算层.动态风险值 -> 判定层.综合得分
+判定层.低风险 -> 展示层.上级汇总
+判定层.一般风险 -> 展示层.上级汇总
+判定层.较大风险 -> 展示层.上级汇总
+判定层.重大风险 -> 展示层.上级汇总

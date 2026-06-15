@@ -1,0 +1,60 @@
+@startuml
+' 标准时序图示例：文件上传流程
+' 渲染命令：python3 scripts/render_diagram.py --type plantuml --file file-upload.puml --output file-upload.png
+' 适用场景：图片/附件/Excel导入等文件上传场景
+
+skinparam backgroundColor #FFFFFF
+skinparam sequenceMessageAlign center
+
+actor 用户
+participant "业务页面" as Frontend
+participant "后端服务" as Backend
+database "数据库" as DB
+participant "文件存储" as Storage
+
+== 单文件上传流程 ==
+
+用户 -> Frontend: 点击【上传文件】\n选择本地文件
+activate Frontend
+Frontend -> Frontend: 校验文件格式和大小
+alt 校验失败
+  Frontend --> 用户: 显示"文件格式不支持"\n或"文件超过大小限制"
+else 校验通过
+  Frontend -> Backend: POST /api/upload\n(multipart/form-data)
+  activate Backend
+  Backend -> Storage: 存储文件
+  activate Storage
+  Storage --> Backend: 返回文件URL
+  deactivate Storage
+  Backend -> DB: 保存文件记录\n(url, name, size, type)
+  activate DB
+  DB --> Backend: 返回文件ID
+  deactivate DB
+  Backend --> Frontend: 返回 { fileId, fileUrl }
+  deactivate Backend
+  Frontend --> 用户: 显示上传成功\n预览文件缩略图
+end
+deactivate Frontend
+
+== Excel 批量导入流程 ==
+
+用户 -> Frontend: 点击【批量导入】\n选择 Excel 文件
+activate Frontend
+Frontend -> Backend: POST /api/import\n(上传 Excel 文件)
+activate Backend
+Backend -> Backend: 解析 Excel 数据\n校验数据格式
+alt 数据格式错误
+  Backend --> Frontend: 返回错误信息\n(行号+错误原因)
+  Frontend --> 用户: 显示错误详情\n提示修改后重新上传
+else 数据格式正确
+  Backend -> DB: 批量插入数据
+  activate DB
+  DB --> Backend: 返回插入结果\n(成功数/失败数)
+  deactivate DB
+  Backend --> Frontend: 返回导入结果
+  deactivate Backend
+  Frontend --> 用户: 显示"导入完成"\n成功N条，失败M条
+end
+deactivate Frontend
+
+@enduml
