@@ -1,0 +1,18 @@
+© 2026 Tech Knowledge Mastery. All rights reserved.
+
+LICENSE: Use of these materials (including all code, prompts, assets, files,
+and other components of this Skill) is permitted for personal and educational
+purposes. Commercial use requires explicit permission from the author.
+
+ADDITIONAL RESTRICTIONS: Notwithstanding anything to the contrary, users may not:
+
+- Claim ownership of this skill or its derivatives
+- Remove this copyright notice from distributed copies
+- Distribute this skill as their own creation
+
+PERMITTED USES:
+- Personal learning and development
+- Educational purposes with attribution
+- Project integration with credit to the original skill
+
+For commercial licensing inquiries, please contact the skill maintainer.
