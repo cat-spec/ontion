@@ -6,6 +6,12 @@
 **/.npm/
 **/.yarn/
 
+#任何ai agent
+.codex/
+.claude/
+.trae/
+
+
 # Common build outputs
 **/dist/
 **/dist-ssr/
