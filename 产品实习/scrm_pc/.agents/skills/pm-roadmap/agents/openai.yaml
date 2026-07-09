@@ -1,5 +1,0 @@
-interface:
-  display_name: "pm-roadmap"
-  short_description: "产品路线图规划技能。适用场景：(1) 制定季度/年度产品路线图，(2) 版本规划和里程碑设计，(3) 多团队功能交付协调，(4) 向管理层或投资人展示产品规划，"
-policy:
-  allow_implicit_invocation: true

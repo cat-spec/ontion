@@ -1,5 +1,0 @@
-interface:
-  display_name: "pm-feature-prioritization"
-  short_description: "产品功能优先级排序技能。支持 RICE、MoSCoW、ICE、Kano 模型等多种优先级框架。适用场景：(1) 需求池排序，(2) 版本规划功能筛选，(3) 资"
-policy:
-  allow_implicit_invocation: true

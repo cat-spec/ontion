@@ -1,5 +1,0 @@
-interface:
-  display_name: "pm-sprint-planning"
-  short_description: "产品迭代规划与敏捷管理技能。适用场景：(1) Sprint/迭代规划会议准备，(2) 将需求拆解为研发任务，(3) 估算工时和容量规划，(4) 迭代复盘总结，("
-policy:
-  allow_implicit_invocation: true

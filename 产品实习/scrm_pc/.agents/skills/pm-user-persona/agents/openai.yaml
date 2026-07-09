@@ -1,5 +1,0 @@
-interface:
-  display_name: "pm-user-persona"
-  short_description: "产品经理用户画像设计技能。适用场景：(1) 创建产品用户画像（Persona），(2) 定义目标用户群体，(3) 用户分层与细分，(4) 用户旅程地图绘制，(5"
-policy:
-  allow_implicit_invocation: true
