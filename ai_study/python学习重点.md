@@ -1,0 +1,1 @@
+# type和 isinstance区别
