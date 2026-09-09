@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "04d18cf74d394ba3",
+        "id": "58b2b807fc4c44f7",
         "type": "tabs",
         "children": [
           {
-            "id": "601ea4b2a88b080b",
+            "id": "bf03bfa0d074ea85",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "front_study/技术学习/git协同工作.md",
+                "file": "ai_study/python细节语法.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "git协同工作"
+              "title": "python细节语法"
             }
           }
         ]
@@ -41,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -53,7 +55,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "git",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -103,8 +105,7 @@
               "title": "添加笔记属性"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -124,13 +125,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "front_study/技术学习/git协同工作.md",
+                "file": "ai_study/python细节语法.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "git协同工作 的大纲"
+              "title": "大纲"
             }
           },
           {
@@ -193,8 +194,21 @@
       "bases:新建数据库": false
     }
   },
-  "active": "601ea4b2a88b080b",
+  "active": "bf03bfa0d074ea85",
   "lastOpenFiles": [
+    "algorithm-study(python)/day2/807perservecityline.py~",
+    "algorithm-study(python)/算法笔记.md",
+    "algorithm-study(python)/day2/807perservecityline.py",
+    "algorithm-study(python)/day2/3838wordpower.py",
+    "algorithm-study(python)/day2/4020elevator Request.py",
+    "algorithm-study(python)/day2",
+    "algorithm-study(python)/day1/刷题笔记.md",
+    "ai_study/python细节语法.md",
+    "ai_study/numpy数据分析.md",
+    "algorithm-study(python)/day1/quickSort.py",
+    "algorithm-study(python)/day1/main.py~",
+    "ai-notion/Docker-知识精要-20260702.md",
+    "front_study/技术学习/git协同工作.md",
     "algorithm-study(python)/day1/main.py",
     "algorithm-study(python)/WelcomeScreen",
     "algorithm-study(python)/day1",
@@ -203,14 +217,12 @@
     "years/2025年.md",
     "ai-agant/AI Agent 新手学习文档.md",
     "ai-agant/Claude CLI.md",
-    "个人图书馆.base",
     "books/漫步华尔街.md",
     "ai_study/openvc-notion/Openvc+yolo.md",
     "front_study/技术学习/Electron学习.md",
     "产品实习/crm多平台翻译/抖音平台接入总结.md",
     "产品实习/crm多平台翻译/douyin-dom-capture-send-intercept-summary.md",
     "front_study/技术学习/element-ui学习.md",
-    "front_study/技术学习/git协同工作.md",
     "front_study/技术学习/Tailwind学习.md",
     "front_study/技术学习/三大框架.md",
     "产品实习/产品实习工作文件/统计管理/统计管理需求文档.md",
@@ -228,19 +240,8 @@
     "产品实习/产品实习工作文件/用户管理/需求文档/正式版用户管理.md",
     "攀岩馆/矮墙路线草图/20米圆角矮墙-路线说明.md",
     "攀岩馆/矮墙路线草图/20米圆角矮墙-路线草图.svg",
-    "攀岩馆/矮墙路线草图",
-    "攀岩馆",
-    "产品实习/产品实习工作文件/用户管理/个人总结.md",
     "产品实习/产品实习工作文件/粗略图/Pasted image 20260601165745.png",
-    "产品实习/产品实习工作文件/统计管理/2026-06-01-IM后台转化统计需求文档-v1.0.md",
     "产品实习/产品实习工作文件/粗略图/Pasted image 20260601164711.png",
-    "excel练枪软件.zip",
-    "excel练枪软件/README.md",
-    "excel练枪软件/dist/Excel练枪软件-模板.xlsm",
-    "excel练枪软件/dist",
-    "excel练枪软件/vba/结算页_Code.txt",
-    "excel练枪软件/docs/01-需求与规划/2026-06-01-Excel练枪软件-设计方案-v1.0.md",
-    "产品实习/产品实习工作文件/消息管理/消息管理需求文档.md",
     "未命名.canvas"
   ]
 }
