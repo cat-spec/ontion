@@ -1,6 +1,11 @@
 # Dependency directories
 **/node_modules/
 
+
+# Obsidian workspace state
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
 # Common frontend package manager artifacts
 **/.pnpm-store/
 **/.npm/
@@ -19,3 +24,5 @@
 
 # OS files
 .DS_Store
+
+**/.idea/
