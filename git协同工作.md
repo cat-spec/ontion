@@ -82,9 +82,10 @@ git push -u origin feature-xxx
 ## 删除远程分支
 git push origin --delete feature-xxx
 
-# 处理冲突
+# 常见场景
+## 处理冲突
 
-## 场景一
+### 场景一
 用户a、b都基于base，用户a修改base进行远程提交为base-1，用户b也修改了base，现在需要对远程进行提交。
 用户b：
 #### 方法一
@@ -104,4 +105,4 @@ git add .
 git rebase --continue
 git push origin main
 
-
+## 取消跟踪配置gitignore
