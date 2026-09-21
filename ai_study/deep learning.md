@@ -22,7 +22,6 @@ w 决定每个输入特征对输出的影响：
 - w 负：这个输入增大，输出倾向减小。
 
 
-
 # 激活函数
 
 ### sigmoid
@@ -102,5 +101,119 @@ loss=nn.L1Loss()
 loss=nn.MSELoss()
 ```
 # 梯度下降优化
-
+### 动量法
+```python
+#参数一需要更新的权重  lr学习率  momentum参数
+optimizer=optim.SGD(params=[w],lr=0.01,momentum=0.9)
+```
+### AdaGrad
+```python
+optimizer=optim.AdaGrad(lr=0.01)
+```
+### RMSProp
+```python
+optimizer=optim.RMSProp(params=[w],lr=0.01,alpha=0.9)
+```
+### Adam
+```python
+optimizer=optim.Adam(params=[w],lr=0.01,betas=(0.9,0.999))
+```
+![[Pasted image 20260920103302.png]]
 # 学习率优化
+### 手动固定间隔学习率调整
+lr=lr×gamma
+```python
+sc_lr=optim.lr_scheduler.StepLR(optimizer,step_size=50,gamma=0.5)
+```
+### 指定间隔学习率
+```python
+#milestones=[100,150,200]
+sc_lr=optim.lr_scheduler.MultisStepLR(optimizer,milestones,gamma=0.1)
+```
+### 指数学习率衰减
+```python
+sc_lr=optim.lr_scheduler.ExponentialLR(optimizer,gamma)
+```
+![[Pasted image 20260920112207.png]]
+
+# 过拟合欠拟合
+### 正则化
+#### 随机失活，留存的进行缩放
+每个神经元p概率死亡，没死亡的神经元进行× 1/1-p
+```python
+dropout=nn.Dropout(p=0.4)
+```
+#### 批量归一化
+```python
+dn=nn.BatchNorm2d(num_deatures=2,eps=1e-5,momentum=0.1,affine=True)
+```
+
+
+![[Pasted image 20260920203433.png]]
+
+
+# 卷积神经网络
+卷积层：提取图像局部特征
+池化层：大幅降低参数量 降维
+全连接层：输出结果
+## 卷积神经网络的构成
+
+卷积核与每一组通道点乘求和，算出的卷积核
+
+![[Pasted image 20260921100758.png]]
+特征图的计算
+![[Pasted image 20260921102334.png]]
+
+### 填充
+![[Pasted image 20260921095236.png]]
+### 步长
+![[Pasted image 20260921095741.png]]
+
+### 卷积层api
+
+### 卷积步骤
+1.读取图片，规范图片维度tensor 
+```python
+img=img.permute(2,0,1)
+img=img.unsqueeze(0)
+#img=(num,wight,height,channel)  图片数量，宽，高，通道
+```
+2.初始化卷积层
+```python
+#in_channels out_channels kernel_size stride padding
+conv=nn.Conv2d(3,3,3,1,0)
+conv_img=conv(img)   
+#img维度必须满足 (N, C_in, H, W)
+含义：
+
+- `N`：batch size，一次处理几张图
+    
+- `C_in`：输入通道数，RGB 图是 3
+    
+- `H`：高
+    
+- `W`：宽
+```
+## 池化层构成
+
+更加池化核，去做运算
+
+![[Pasted image 20260921112424.png]]
+
+### 最大池化
+选取池化核中最大的值
+### 平均池化
+选取池化核中值的和的平均值
+
+## 池化层api
+池化层可以接受 `(3, H, W)`，它也能接受 `(N, C, H, W)`。
+```python
+# 初始化最大池化层
+#池化核大小  步长  填充
+pool1=nn.MaxPool2d(2,1,0)
+pool=pool1(img)
+#平均池化层
+#池化核大小  步长  填充
+pool1=nn.AvgPool2d(2,1,0)
+pool=pool1(img)
+```
