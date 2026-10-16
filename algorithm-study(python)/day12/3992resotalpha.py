@@ -1,19 +1,14 @@
 def rearrangeString(s: str, x: str, y: str) -> str:
-    num = s.count(y)
-    numx = s.count(x)
-    if num != 0 and numx != 0:
-        list = [str1 for str1 in s]
-        list.sort()
-        indexx = list.index(x)
-        indexy = list.index(y)
-        for j in range(num):
-            if indexy > indexx:
-                list[indexy] = x
-                list[indexx] = y
-                indexy = s.index(y, indexy)
-                indexx -= 1
-        return "".join(list)
+    list1=[str1 for str1 in s]
+    numx=list1.count(x)
+    numy=list1.count(y)
+    if numx!=0 and numy!=0:
+        for i in range(numy):
+            list1.remove(y)
+            list1.append(y)
+        list1.reverse()
+        return "".join(list1)
     return s
 
 if __name__=="__main__":
-    print(rearrangeString("aabc","a","c"))
+    print(rearrangeString("nkgbfmmec","f","m"))

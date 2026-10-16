@@ -1,4 +1,13 @@
+[[pytorch]][[CIFAR10训练集与MNIST训练集]]
 # 神经网络
+# 路线图规划
+1.初步了解深度学习 ann cnn rnn 
+2.主流模型架构transformer resnet 
+3.大模型基础Hugging Face + vLLM 主推理  初步速成学习
+4.Ai agent开发 LangChain MCP      初步速成学习
+最迟10月底
+结束ai 大模型学习开启ai infra
+
 ### W权重
 #### 为什么一开始是随机数？
 
@@ -84,14 +93,25 @@ class ModelDemo(nn.Module):
 
 ```
 
+# 训练轮次批次数
+
+**epoch** = 把整个数据集完整过多少轮。  
+**batch_size** = 每个批次包含多少张图片。  
+**batch** = `ceil(总样本数 / batch_size)`。  
+**知道两个就可以推出第三个**。
+内循环次数决定参数更新次数
+- **外循环**跑 1 次 = 模型看了 50000 张图（1 个 epoch）。
+- **内循环**跑 1 次 = 模型看了 2048 张图（1 个 batch），更新一次参数。
+
+
 # 损失函数
 ### 多分类交叉熵损失
 ```python
-nn.CrossEntropyLoss()
+loss=nn.CrossEntropyLoss()
 ```
 ### 二分类任务损失函数
 ```python
-nn.BCELoss()
+loss=nn.BCELoss()
 ```
 ### MAE与MSE
 ``` python
@@ -140,11 +160,23 @@ sc_lr=optim.lr_scheduler.ExponentialLR(optimizer,gamma)
 ### 正则化
 #### 随机失活，留存的进行缩放
 每个神经元p概率死亡，没死亡的神经元进行× 1/1-p
+
 ```python
+#处理时间为 全连接的 激活函数后进行 随机失活
+#Dropout   
+#Dropout1d
+#Dropout2d
+#Dropout3d
+
 dropout=nn.Dropout(p=0.4)
+x=dropout(x)
 ```
 #### 批量归一化
 ```python
+# BatchNorm1d 全连接层，处理一维数据 （N,num_features）
+# BatchNorm2d 卷积层之后，二维或者特征图 (n,c,h,w)
+# BatchNorm3d
+
 dn=nn.BatchNorm2d(num_deatures=2,eps=1e-5,momentum=0.1,affine=True)
 ```
 
@@ -217,3 +249,46 @@ pool=pool1(img)
 pool1=nn.AvgPool2d(2,1,0)
 pool=pool1(img)
 ```
+
+## Cifar项目整体
+
+# 循环神经网络
+
+## 词嵌入层
+```python
+
+```
+
+## 循环网络层
+```python
+
+```
+
+# Transformer架构
+1.提升并行处理任务的能力
+2.提升长距离依赖建模能力 
+## 架构图
+![[Pasted image 20260923142417.png]]
+## 位置编码
+
+## 注意力
+### 自注意机制
+![[Pasted image 20260923150512.png]]
+![[Pasted image 20260923151518.png]]
+问题
+1.vi有什么作用
+2.bi的信息含义：当前i词与所有词的关联程度
+3.
+
+### 多头注意力机制
+![[Pasted image 20260923153524.png]]
+### 掩码注意力机制
+![[Pasted image 20260923154733.png]]
+问题
+1.为什么序列长度一致，gpu并行运算就高效
+
+## 层归一化，残缺化
+
+## 前馈神经网络
+
+

@@ -281,8 +281,155 @@ int &ref = a;  // ref 是 a 的引用
 
 # 结构体
 
+# 类Class
+### 成员函数
+```c++
+## 类的外部定义语法 
+double Box::getVolume(void)
+{
+    return length * breadth * height;
+}
+# 类的内部定义
+class Box{
+double getVolume(void) { return length * breadth * height; }
+}
+```
+### 类访问修饰符
+- **`public`** (公有)
+- **`private`** (私有)
+- **`protected`** (受保护)
+class默认private
 
+| 修饰符           | 现实类比      | 谁可以访问？               | 典型用途               |
+| ------------- | --------- | -------------------- | ------------------ |
+| **public**    | **客厅/大门** | **所有人**（类内部、子类、外部代码） | 对外提供的接口函数（API）。    |
+| **protected** | **卧室**    | **你和你的孩子**（类内部、子类）   | 仅限家族内部（继承体系）使用的数据。 |
+| **private**   | **保险箱**   | **只有你自己**（仅限本类内部）    | 核心数据、不想被随意修改的变量。   |
+1. `private` 继承后：
+    - `Parent::pub_var` 在 `ChildC` 中变成 `private`
+    - `Parent::pro_var` 在 `ChildC` 中变成 `private`
+2. 但 `ChildC::test()` 是 `ChildC` 自己的成员函数。
+    - **一个类的成员函数可以访问这个类的 private 成员。**
+    - 所以 `ChildC::test()` 可以访问“继承过来后在 ChildC 中变成 private”的 `pub_var` 和 `pro_var`。
+3. 不能访问的是：
+    - `Parent` 中原本声明为 `private` 的成员，比如 `pri_var`。
+    - 无论 public / protected / private 继承，基类 private 成员子类都不能直接访问。
+### 构造函数、析构函数、拷贝函数
+```c++
+# 初始化构造一 推荐
+C::C(double a, double b, double c) : X(a), Y(b), Z(c)
+{
+    // 其他初始化逻辑（若有）
+}
+# 析构函数 为了与构造函数区分使用~ 类在销毁的时候调用
+Line::~Line() { cout << "Object is being deleted" << endl; // 若有动态分配的资源，在此释放，例如：delete[] data; }
 
+```
+### 静态变量与函数
+```c++
+class Person{
+	public:
+		static int age
+		static int Volume()
+}
+# 1.可以通过类名：：直接进行调用  2.全局最先被创建出来 3.不能使用this
+Box::age
+Box::volume()
+
+```
+### 封装继承多态
+```c++
+=================
+#继承类   public protected  private
+class Dog : public Animal {  
+    // bark() 函数  
+};
+# 多继承
+class Rectangle: public Shape, public PaintCost{}
+```
+
+### 函数重载与运算符重载
+```c++
+========================
+# 函数重载 ，语法：方法名一致，形参类型变动
+class printData {
+ public: 
+ void print(int i) { cout << "整数为: " << i << endl; } 
+ void print(double f) { cout << "浮点数为: " << f << endl; }
+ void print(char c[]) { cout << "字符串为: " << c << endl; } };
+=============================
+#运算符重载  语法：返回类型 operator关键子 重载运算符 （参数）
+Box operator+(const Box&b)
+```
+
+### 多态虚函数
+```c++
+#关键字virtual   override
+class Animal {  
+public:  
+    // 虚函数 sound，为不同的动物发声提供接口  
+    virtual void sound() const {  
+        cout << "Animal makes a sound" << endl;  
+    }   
+    // 虚析构函数确保子类对象被正确析构  
+    virtual ~Animal() {  
+        cout << "Animal destroyed" << endl;  
+    }  
+};
+
+// 派生类 Dog，继承自 Animal  
+class Dog : public Animal {  
+public:  
+    // 重写 sound 方法  
+    void sound() const override {  
+        cout << "Dog barks" << endl;  
+    }  
+     
+    ~Dog() {  
+        cout << "Dog destroyed" << endl;  
+    }  
+};
+==============================
+# 纯虚函数  如果子类继承该类，必须强制实现该方法
+class Shape { 
+public: virtual int area() = 0; // 纯虚函数，强制子类实现此方法 
+};
+
+```
+### 虚函数与纯虚函数的对比
+
+|特性|虚函数（Virtual Function）|纯虚函数（Pure Virtual Function）|
+|---|---|---|
+|定义|基类中使用 `virtual` 声明，有实现|基类中使用 `= 0` 声明，无实现|
+|子类重写|子类可以选择重写|子类必须实现|
+|抽象性|可以实例化类|使类变为抽象类，无法实例化|
+|用途|提供默认行为，允许子类重写|定义接口，强制子类实现具体行为|
+
+# 模板
+模板就是“类型参数化”
+```c++
+================
+#函数模板
+template <typename T>
+T myMax(T a, T b) {
+    return a > b ? a : b;
+}
+
+int main() {
+    std::cout << myMax(1, 2) << '\n';        // T = int
+    std::cout << myMax(1.5, 2.5) << '\n';    // T = double
+    std::cout << myMax<double>(1, 2.5) << '\n'; // 显式指定 T
+}
+============================
+template <typename T>
+class Box {
+private:
+    T value;
+public:
+    Box(T v) : value(v) {}
+    T get() const { return value; }
+};
+```
 
 # 常用库
 ## cmath
