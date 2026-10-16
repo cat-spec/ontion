@@ -109,5 +109,5 @@ git push origin main
 
 ## git网络错误
 ```
-git -c http.proxy=http://127.0.0.1:7890 -c https.proxy=http://127.0.0.1:7890 clone https://huggingface.co/...
+git -c http.proxy=http://127.0.0.1:7897 -c https.proxy=http://127.0.0.1:7897 clone https://huggingface.co/...
 ```
