@@ -106,3 +106,8 @@ git rebase --continue
 git push origin main
 
 ## 取消跟踪配置gitignore
+
+## git网络错误
+```
+git -c http.proxy=http://127.0.0.1:7890 -c https.proxy=http://127.0.0.1:7890 clone https://huggingface.co/...
+```

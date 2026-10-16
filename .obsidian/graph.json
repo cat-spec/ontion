@@ -1,6 +1,6 @@
 {
-  "collapse-filter": true,
-  "search": "",
+  "collapse-filter": false,
+  "search": "git",
   "showTags": false,
   "showAttachments": false,
   "hideUnresolved": false,
@@ -18,5 +18,5 @@
   "linkStrength": 1,
   "linkDistance": 250,
   "scale": 0.9999999999999997,
-  "close": true
+  "close": false
 }
