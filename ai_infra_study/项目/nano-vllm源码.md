@@ -71,6 +71,106 @@ def add(a, b, c):
 nums = [1, 2, 3]
 print(add(*nums))     # 6  ← 等价 add(1, 2, 3)
 ```
+## 枚举
+枚举内置函数
+```python
+fruits = ['apple', 'banana', 'cherry']
+
+for i, fruit in enumerate(fruits):
+    print(i, fruit)
+# 0 apple
+# 1 banana
+# 2 cherry
+```
+enum模块
+```python
+from enum import Enum
+class Status(Enum):
+    PENDING = auto()   # 1
+    RUNNING = auto()   # 2
+    DONE = auto()      # 3
+============
+每个枚举类两个属性
+Status.PENDING.value   #1
+Status.PENDING.name   # PENDING
+```
+
+
+
+# 问题回答
+## llm_engine.py
+1.**在init函数声明变量**
+self.config和config最大区别：前者挂载类上，后者是局部变量
+
+| 名字                             | 作用域              | 生命周期                   | 谁能访问             |
+| ------------------------------ | ---------------- | ---------------------- | ---------------- |
+| **`config`（局部变量）**             | `__init__` 函数体内  | 函数返回后消失（但对象本身被引用不会 GC） | 只有 `__init__` 内部 |
+| **`self.model_runner.config`** | ModelRunner 实例属性 | 和 ModelRunner 同寿命      | ModelRunner 内部   |
+| **`self.scheduler.config`**    | Scheduler 实例属性   | 和 Scheduler 同寿命        | Scheduler 内部     |
+2.**step内的数据流动**
+每一个step内的seq独立判断,seq集合有输出eos，就移除
+```python
+running = [Seq0, Seq1, Seq2]
+step 1 decode:
+  Seq0 生成 t03，没到 max_tokens → 继续
+  Seq1 生成 t13，命中 eos → FINISHED，移除
+  Seq2 生成 t24，继续
+running = [Seq0, Seq2]
+
+step 2 decode:
+  Seq0 生成 t04，继续
+  Seq2 生成 t25，到 max_tokens → FINISHED，移除
+running = [Seq0]
+
+is_finished() → waiting 空 且 running 空 → True
+generate 主循环退出
+```
+同一step内所有seq必须全部完成才返回用户结果
+```python
+while not self.is_finished():
+```
+
+3.**模型输出 `logits (9, vocab)`含义**
+当前值是后一个字的概率预测
+``` 
+输入序列:   [t0, t1, t2, t3, ...]
+位置索引:    0   1   2   3   ...
+logits[0] 预测的是 t1
+logits[1] 预测的是 t2
+logits[2] 预测的是 t3
+...
+logits[i] 预测的是 t(i+1)
+```
+
+## scheduler.py
+**1.如何保证一个step不混合prefill和decode**
+```python
+waiting队列 全新加入进来的seq
+running队列 已经做过prefill的seq，全部kv在内存之中
+```
+
+**2.抢占只发生在需要分配空间的时候**
+while else结构 true进入循环，false执行一次else
+```python
+while not self.block_manager.can_append(seq):     # ★ 只有 can_append 为 False 才进循环
+    if self.running:
+        self.preempt(self.running.pop())
+    else:
+        self.preempt(seq)
+        break
+else:
+    # can_append 为 True 时走这里，正常加入 scheduled
+```
+
+## sequence.py
+一个自己定义的类型
+```python
+```
+
+
+# 标准检测
+## 每个文件的数据是如何流动的。
+维度信息，数据的含义，并发串行数据。
 
 
 # 第三方API
@@ -95,4 +195,29 @@ class Config:
 	#现在只用写
 	__post_init__
 
+```
+## transformers
+模型编码和解码
+```python
+#去模型路径下找模型对应的tokenizer.json文件 ，使用rust加速实现
+tokenizer=AutoTokenizer.from_pretrained(model_path,use_fast=True)  
+str1="你好世界"  
+token_id=tokenizer.encode(str1)  
+#[108386, 99489]
+word_id=tokenizer.decode(token_id)
+#你好世界
+===============
+#获取该模型的停止标号
+config.eos = self.tokenizer.eos_token_id
+```
+## xxhash
+```python
+import xxhash
+
+h = xxhash.xxh64()          # 构造一个 XXH64 哈希对象（64 位输出）
+h.update(b"hello")          # 喂入数据（bytes）
+h.update(b" world")         # 可以分多次喂入，效果等同于一次性喂 "hello world"
+h.intdigest()               # 拿到 64 位整数结果
+h.hexdigest()               # 拿到十六进制字符串结果
+h.digest()                  # 拿到 bytes 结果（大端序）
 ```
