@@ -10,6 +10,84 @@
 7. 📤 所有序列结束后，按请求顺序解码成字符串返回。
 **关键点**：**Prefill 和 Decode 不混在同一个 batch 里**（这一点与早期 vLLM 一致）。prefill 一次吃掉整段 prompt、是算力密集型；decode 每条序列每步只算一个 token、是访存密集型。调度器用「这一轮要么全 prefill、要么全 decode」的策略把两种负载分开，这是理解 `Scheduler` 的前提，3.5 会详细展开。
 
+## 1.1 整体架构图
+
+```text
+## 1.1 整体架构图
+
+text
+
+┌────────────────────────────── LLM (用户门面) ──────────────────────────────┐
+│  __init__: config / tokenizer / model_runner / scheduler                   │
+│  generate(prompts, sampling_params)                                        │
+└───────────────────────────────────┬────────────────────────────────────────┘
+                                    │
+        ┌───────────────────────────┼───────────────────────────┐
+        ▼                           ▼                           ▼
+┌───────────────┐         ┌──────────────────┐         ┌────────────────────┐
+│  Scheduler    │         │   ModelRunner    │         │   Config           │
+│ waiting(双端) │◄──调度──►│  model + kv_cache│         │ model_config       │
+│ running       │         │  prepare_input   │         │ cache_config       │
+│ BlockManager  │         │  run(seqs)       │         │ parallel_config(tp)│
+└───────┬───────┘         └────────┬─────────┘         └────────────────────┘
+        │ 分配/回收 block           │ 组织 batch / attention metadata
+        ▼                          ▼
+┌───────────────┐         ┌──────────────────────────────────────────────┐
+│ physical      │         │  Qwen3ForCausalLM                            │
+│ block pool    │         │   embed_tokens                               │
+│ (num_blocks)  │         │   layers[0 .. L-1]  ← Qwen3DecoderLayer      │
+└───────────────┘         │   norm → lm_head → logits                    │
+                          └──────────────────────────────────────────────┘
+                                        │
+                                        ▼
+                          ┌──────────────────────────────────┐
+                          │ kv_cache                         │
+                          │ [2, L, num_blocks, bs, kvh, hd]  │
+                          │  ↑ 每层持有切片视图              │
+                          └──────────────────────────────────┘
+```
+
+## 1.2 一次 `generate` 的时序
+
+```text
+用户: generate([p0,p1,p2], sp)
+  │
+  ├─ add_request × 3
+  │    tokenize → Sequence(seq_id, prompt_ids, block_table=[])
+  │    scheduler.add(seq)  → waiting 队尾
+  │
+  ├─ while not scheduler.is_finished():
+  │     │
+  │     ├─ schedule() ─────────────────────────────────────────────┐
+  │     │    for seq in waiting/running:                          │
+  │     │        检查：token 预算 / block 预算 / 显存              │
+  │     │        分配 block → block_table.append               │
+  │     │        产出 SchedulerOutput{prefill_seqs, decode_seqs}│
+  │     │                                                       │
+  │     ├─ model_runner.run(seqs, is_prefill)  ◄─────────────────┘
+  │     │     │
+  │     │     ├─ prepare_prefill: input_ids=打平, cu_seqlens, slot_mapping
+  │     │     │   prepare_decode: input_ids=每序列1个, context_lens, block_tables
+  │     │     │
+  │     │     ├─ forward: embed → L×(Attn+MLP) → lm_head
+  │     │     │    每层 Attn:
+  │     │     │       qkv_proj → split/view → QK-Norm/RoPE
+  │     │     │      store_kvcache(k,v,slot_mapping)  ← 写增量
+  │     │     │      prefill: flash_attn_varlen(q,k,v)
+  │     │     │      decode : flash_attn_with_kvcache(q, cache, block_table)
+  │     │     │
+  │     │     └─ sampler(logits, sampling_params) → token_id
+  │     │
+  │     ├─ postprocess: seq.append_token(token_id)
+  │     │     if token == eos / 达到 max_tokens:
+  │     │         scheduler.free(seq) → block_manager 回收
+  │     │     else:
+  │     │         seq 从 waiting/prefill 移到 running/decode
+  │     │
+  │     └─ 下一轮 step
+  │
+  └─ detokenize → 返回文本
+```
 
 # 深度学习理论
 ## temperature 的直观效果（重点）

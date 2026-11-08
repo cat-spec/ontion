@@ -1,4 +1,4 @@
-# 学习路线
+# 校园学习路线
 ## 阶段1：基础速成（9月份）
 
 C++,python,c++,docker,k8s
@@ -43,9 +43,40 @@ cuda->cuda architecture->cuda optimization
 
 **验收标准**：能写PyTorch自定义算子，能用Triton写kernel，能读懂PyTorch算子调用链。
 
-## 阶段4：选一个方向深入（后续）
-模型推理与部署 vllm KV Cache
-## 阶段5：开启分布式
+## 阶段4：分布式推理
+1.从nano_vllm入手了解推理模型
+2.完成各种分布式训练的demo
+- 学会通信和显存成本
+- 编写benchmark获得性能指标
+3.高级cuda课程
+- Stream 与 Event。
+- 异步执行。
+- Host 和 Device 之间的数据传输。
+- Pinned Memory。
+- 多 Stream 并发。
+- Kernel Launch 开销。
+- CUDA Graph 的捕获与重放。
+- CUDA Graph 对动态形状和动态批次的限制。
+4.深入了解pytorch的各个包的底层实现
+
+|能力|验收要求|
+|---|---|
+|LLM 推理|理解 Prefill、Decode、KV Cache、Continuous Batching|
+|推理引擎|能够阅读 nano-vLLM 的核心执行流程|
+|GPU 执行|理解 Stream、Event、CUDA Graph|
+|多 GPU 通信|能够编写基础集合通信程序|
+|NCCL|理解主要集合通信操作及性能模型|
+|分布式执行|理解 Rank、Process Group、同步机制|
+|性能分析|能够设计实验、记录指标并分析瓶颈|
+
+## 阶段5：开启综合大型项目
+1.分布式训练
+大型框架的掌握deepspeed
+2.分布式推理
+vllm
+3.性能工程
+
+4.完成模型的训练+推理部署到自己网站
 
 # CUDA
 1. 分配GPU内存

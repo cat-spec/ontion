@@ -218,7 +218,7 @@ if w.grad is not None:
 8. **与其他知识点的联系**：数据变形与广播机制紧密相关——广播允许不同形状的张量自动扩展为相同尺寸而不复制数据。此外，`view()` 和 `permute()` 在 Transformer 的 Multi-Head Attention 中用于将 `(batch, seq_len, d_model)` 拆分为多个注意力头。
 ## API
 
-## 地址类API
+### 地址类API
 ### 判断原地操作的 API：`Tensor.data_ptr()`
 
 **功能**：返回张量底层数据的内存地址（整数）。如果两个张量的 `data_ptr()` 相同，说明它们共享同一块内存。
@@ -238,3 +238,82 @@ if w.grad is not None:
 **功能**：判断张量在内存中是否连续存储。这个在后面问题 2 会详细讲。
 ## 封装Attention API
 **`torch.nn.functional.scaled_dot_product_attention` (SDPA)**：这是 PyTorch 2.0+ 中最重要的底层注意力函数。它接收已经投影好的 Q、K、V 张量，直接计算缩放点积注意力，并能根据输入和 GPU 类型**自动选择最高效的后端实现**（如 FlashAttention、Memory-Efficient Attention 或纯数学计算）
+
+# 设备
+### 1. 设备管理与查询
+
+| API                                   | 作用           |
+| ------------------------------------- | ------------ |
+| `torch.cuda.is_available()`           | CUDA 是否可用    |
+| `torch.cuda.device_count()`           | GPU 数量       |
+| `torch.cuda.current_device()`         | 当前选中的设备索引    |
+| `torch.cuda.set_device(device)`       | 切换当前设备       |
+| `torch.cuda.get_device_name(i)`       | GPU 型号       |
+| `torch.cuda.get_device_properties(i)` | 完整属性（显存、算力等） |
+### 2. 内存管理：理解“allocated”与“reserved”
+
+PyTorch 使用**缓存分配器**：`cudaMalloc` 申请的大块显存不会被立即还给操作系统，而是留在池中供下次复用。因此存在两个关键指标：
+
+| API                                         | 含义                        |
+| ------------------------------------------- | ------------------------- |
+| `torch.cuda.memory_allocated()`             | **活跃张量**实际占用的字节数          |
+| `torch.cuda.memory_reserved()`              | 缓存分配器**保留**的总字节数（含空闲池）    |
+| `torch.cuda.max_memory_allocated()`         | 自上次 reset 以来的峰值 allocated |
+| `torch.cuda.empty_cache()`                  | 把**空闲**的缓存块还给操作系统         |
+| torch.cuda.memory_summary(abbreviated=True) | 结构化全体快照                   |
+
+# 神经网络
+`import torch.nn as nn` 模型层
+`import torch.nn.functional as F` 各种函数
+`import torch.optim as optim`
+## 获取模型元信息
+```python
+================
+获取模型层名字和参数
+for name, param in net.named_parameters():
+	print()
+获取指定模型参数
+net.state_dict()['hidden1.weight']
+```
+
+# 多线程协同
+### 初始化
+```python
+import torch.distributed as dist
+dist.init_process_group(backend="nccl")
+rank=dist.get_rank()
+world_size=dist.get_world_size()
+local_rank = int(os.environ["LOCAL_RANK"])
+torch.cuda.set_device(local_rank)
+```
+### 通信原语
+```python
+#对rank进行分组，操作
+group=dist.new_group(range())
+#规约
+dist.reduce(tensor,dst,op,group)
+#广播规约
+dist.all_reduce(tensor, op=dist.ReduceOp.SUM, group=group)
+#广播
+dist.broadcast(tensor, src=0, group=group)
+#分发
+ if rank == 0:
+        dist.scatter(tensor, scatter_list=scatter_list, src=0, group=group)
+    else:
+        dist.scatter(tensor, scatter_list=[], src=0, group=group)
+#聚集
+if rank == 0:
+        gather_list = [torch.empty(1, device="cuda") for _ in range(world)]
+        dist.gather(tensor, gather_list=gather_list, dst=0, group=group)
+        print(f"rank 0 gathered: {[g.item() for g in gather_list]}")
+    else:
+        dist.gather(tensor, gather_list=[], dst=0, group=group)
+#广播聚集
+dist.all_gather(gather_list, tensor, group=group)
+#同步点  所有rank必须到达
+dist.barrier() 
+```
+
+```shell
+torchrun --nprow_pre_node=8 train.py
+```

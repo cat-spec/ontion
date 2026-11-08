@@ -49,6 +49,9 @@ w 决定每个输入特征对输出的影响：
 
 
 ![[Pasted image 20260919102027.png]]
+### SwiGLU
+![[Pasted image 20261101215814.png]]
+
 
 # 参数初始化
 ### 均匀分布初始化
@@ -66,6 +69,56 @@ nn.init.xavier_normal_()
 nn.init.xavier_uniform_()
 
 ![[Pasted image 20260919104129.png]]
+
+# 数据集
+**数据集（Dataset）→ 变换（transforms）→ 采样（Sampler）→ 批量加载（DataLoader）**
+### 数据集
+```python
+import torchvision.datasets as datasets
+import torchvision.transforms as transforms
+# 数据集位置 ，训练集，是否需要下载，数据初始化
+train_dataset=datasets.MNIST(datasets_path,train=True,download=False,transform=transform)
+#查看数据元信息
+len(train_dataset)
+train_dataset.data
+train_dataset.targets
+train_dataset.class_to_idx #类别名-》索引
+```
+### 变化
+预处理 + 数据增强
+```python
+from torchvision import datasets, transforms
+`transforms` 中的每个变换都是一个**可调用对象**：先构建实例，再对图像调用。多个变换用 `Compose` 串成流水线，依次执行。
+transform = transforms.Compose([
+    transforms.Resize((224, 224)),        # 统一尺寸
+    transforms.ToTensor(),                 # PIL/NumPy → Tensor，同时 [0,255] → [0,1]
+    transforms.Normalize(mean, std),       # 逐通道标准化
+])
+
+```
+### 采样
+控制“按什么顺序取哪些样本
+
+### 加载
+```python
+from torch.utils.data import DataLoader
+dataloader=DataLoader(dataset, batch_size=1, shuffle=False, sampler=None,
+           batch_sampler=None, num_workers=0, collate_fn=None,
+           pin_memory=False, drop_last=False, timeout=0,
+           worker_init_fn=None, prefetch_factor=2, persistent_workers=False)
+dataloader.dataset #原始数据
+next(iter(dataloader)) #当前一批大小的数据
+
+```
+
+|参数|作用|典型设置|
+|---|---|---|
+|`batch_size`|每批样本数|32/64/128|
+|`shuffle`|每个 epoch 是否打乱顺序|训练集 `True`，验证/测试 `False`|
+|`num_workers`|子进程数，0 表示主进程加载|从 0 开始，慢时逐步增加|
+|`drop_last`|样本数不能被 `batch_size` 整除时，是否丢掉最后一批|训练时常用 `True` 避免 BN 问题|
+|`pin_memory`|将 batch 放入锁页内存，加速 CPU→GPU 拷贝|GPU 训练时 `True`|
+
 
 # 神经网络搭建
 ```python
@@ -109,6 +162,8 @@ class ModelDemo(nn.Module):
 ```python
 loss=nn.CrossEntropyLoss()
 ```
+![[Pasted image 20261029145522.png]]
+![[Pasted image 20261029145843.png]]
 ### 二分类任务损失函数
 ```python
 loss=nn.BCELoss()
@@ -116,10 +171,20 @@ loss=nn.BCELoss()
 ### MAE与MSE
 ``` python
 #MAE损失函数
+#|真实值-预测值| 求和 * 1/n
 loss=nn.L1Loss()
+**优缺点**：
+- **优点**：**对异常值鲁棒**。少数离群点不会颠覆模型的学习方向。[](https://kaiwu.qboson.com/forum.php?mod=viewthread&action=printable&tid=693)  
+- **缺点**：在零点（误差为 0）处**不可导**，给基于梯度的优化带来麻烦；且梯度恒定，在最优解附近容易“震荡”，难以精细收敛。
+
 #MSE损失函数
+#（真实值-预测值）^2 求和 * 1/n
 loss=nn.MSELoss()
+**优缺点**：
+- **优点**：处处可导，优化性质良好，在最优解附近梯度会平滑减小，收敛稳定。 
+- **缺点**：**对异常值极度敏感**。一个极端的离群点会主导整个损失，把决策边界“拉偏”，损害模型在正常数据上的表现。
 ```
+
 # 梯度下降优化
 ### 动量法
 ```python
@@ -158,20 +223,26 @@ sc_lr=optim.lr_scheduler.ExponentialLR(optimizer,gamma)
 
 # 过拟合欠拟合
 ### 正则化
-#### 随机失活，留存的进行缩放
+### 随机失活，留存的进行缩放
 每个神经元p概率死亡，没死亡的神经元进行× 1/1-p
-
+控制过拟合
 ```python
 #处理时间为 全连接的 激活函数后进行 随机失活
 #Dropout   
 #Dropout1d
 #Dropout2d
 #Dropout3d
-
+p是失活概率，也就是为0的概率
 dropout=nn.Dropout(p=0.4)
 x=dropout(x)
+====================
+#底层实现
+q = 1.0 - p
+mask = (torch.rand_like(h) < q).to(h.dtype)  # 伯努利掩码
+return mask * h / q  # 存活
+
 ```
-#### 批量归一化
+### 批量归一化
 ```python
 # BatchNorm1d 全连接层，处理一维数据 （N,num_features）
 # BatchNorm2d 卷积层之后，二维或者特征图 (n,c,h,w)
@@ -179,8 +250,6 @@ x=dropout(x)
 
 dn=nn.BatchNorm2d(num_deatures=2,eps=1e-5,momentum=0.1,affine=True)
 ```
-
-
 ![[Pasted image 20260920203433.png]]
 
 
